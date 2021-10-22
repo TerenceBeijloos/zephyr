@@ -1,0 +1,3 @@
+config BOARD_ARM_DA14699
+	bool "DA14699 dual core BLE SOC"
+	depends on SOC_DA1469x

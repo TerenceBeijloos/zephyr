@@ -1,0 +1,8 @@
+if BOARD_DA14699
+
+config BOARD
+   default "DA14699"
+
+# TODO: Other options you want enabled by default go next. Examples:
+
+endif # BOARD_DA14699

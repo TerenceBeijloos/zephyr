@@ -1,0 +1,6 @@
+soc {
+		sram0 memory@800000 {
+			// compatible = mmio-sram; TODO
+			reg = <0x800000 DT_SIZE_K(512)>;
+		};
+};

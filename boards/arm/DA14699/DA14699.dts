@@ -1,0 +1,37 @@
+/dts-v1/;
+#include <your_soc_vendor/your_soc.dtsi>
+
+/ {
+     model = "Renesas Electronics DA14699";
+     compatible = "Renesas,DA14699";
+
+     chosen {
+             zephyr,console = &your_uart_console;
+             zephyr,sram = &sram0;
+             /* other chosen settings  for your hardware */
+     };
+
+     /*
+      * Your board-specific hardware: buttons, LEDs, sensors, etc.
+      */
+
+     leds {
+             compatible = "gpio-leds";
+             led0: led_0 {
+                     gpios = < /* GPIO your LED is hooked up to */ >;
+                     label = "LED 0";
+             };
+             /* ... other LEDs ... */
+     };
+
+     buttons {
+             compatible = "gpio-keys";
+             /* ... your button definitions ... */
+     };
+
+     /* These aliases are provided for compatibility with samples */
+     aliases {
+             led0 = &led0; /* now you support the blinky sample! */
+             /* other aliases go here */
+     };
+};
