@@ -1,6 +1,75 @@
-soc {
-		sram0 memory@800000 {
-			// compatible = mmio-sram; TODO
-			reg = <0x800000 DT_SIZE_K(512)>;
-		};
+
+sysclk: system-clock {
+	compatible = "fixed-clock";
+	clock-frequency = <25000000>;
+	#clock-cells = <0>;
 };
+
+uart0: uart@200000 {
+	compatible = "arm,cmsdk-uart";
+	reg = <0x200000 0x1000>;
+	interrupts = <33 3 32 3>;
+	interrupt-names = "tx", "rx";
+	clocks = <&sysclk>;
+	current-speed = <115200>;
+	label = "UART_0";
+};
+
+gpio_led0: mps2_fpgaio@302000 {
+	compatible = "arm,mps2-fpgaio-gpio";
+
+	reg = <0x302000 0x4>;
+	gpio-controller;
+	#gpio-cells = <1>;
+	ngpios = <2>;
+	label = "FPGA_LED0";
+};
+
+// #include "skeleton.dtsi"
+
+// #include <arm/armv8-m.dtsi>
+// #include <mem.h>
+
+// / {
+// 	cpus {
+// 		#address-cells = <1>;
+// 		#size-cells = <0>;
+
+// 		cpu@0 {
+// 			device_type = "cpu";
+// 			compatible = "arm,cortex-m33";
+// 			reg = <0>;
+// 			#address-cells = <1>;
+// 			#size-cells = <1>;
+
+// 			mpu: mpu@e000ed90 {
+// 				compatible = "arm,armv8m-mpu";
+// 				reg = <0xe000ed90 0x40>;
+// 				arm,num-mpu-regions = <16>;
+// 			};
+// 		};
+
+// 		sram0: memory@800000 {
+// 			compatible = "mmio-sram"; //TODO correct compatibility?
+// 		};
+
+// 		flash0: flash@0 {
+// 			compatible = "serial-flash";
+// 			label = "FLASH_NUMICRO";
+// 			erase-block-size = <4096>;
+// 			write-block-size = <1>;
+// 		};
+		
+// 		// soc {
+// 		// 	uart0: serial@40070000 {
+// 		// 		compatible = "Renesas,DA14699-uart";
+// 		// 		reg = <0x40070000 0x1000>;
+// 		// 		status = "disabled";
+// 		// 		label = "UART_0";
+// 		// 	};
+// 		// };
+// 	};
+
+
+
+// };

@@ -1,0 +1,8 @@
+identifier: DA14699
+name: DA14699
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - zephyr
+ram: 512
