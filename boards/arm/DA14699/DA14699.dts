@@ -6,41 +6,18 @@
 
 /dts-v1/;
 
-#include <mem.h>
-// #include <arm/armv8-m.dtsi>
-// #include <dt-bindings/i2c/i2c.h>
+
 
 #include "skeleton.dtsi"
-#include <Renesas/DA14699/DA14699.dtsi>
-
-// / {
-//  soc {
-//   #address-cells = <1>;
-//   #size-cells = <1>;
-// //   compatible = "simple-bus";
-// //   interrupt-parent = <&nvic>;
-// //   ranges;
-// //   nvic: interrupt-controller@e000e100 {
-// //    #address-cells = <1>;
-// //    compatible = "arm,v8m-nvic";
-// //    reg = <0xe000e100 0xc00>;
-// //    interrupt-controller;
-// //    #interrupt-cells = <2>;
-// //   };
-// //   systick: timer@e000e010 {
-// //    compatible = "arm,armv8m-systick";
-// //    reg = <0xe000e010 0x10>;
-//   };
-//  };
-// };   
+#include <Renesas/DA14699/DA14699.dtsi>   
 
 / {   
-	compatible = "arm,DA1469x";
+	compatible = "renesas,DA1469x";
 	#address-cells = <1>;
 	#size-cells = <1>;
 
 	aliases {
-		led0 = &led_0;
+		led0 = &red_led;
 	};
 
 	chosen {
@@ -51,150 +28,10 @@
 
 	leds {
 		compatible = "gpio-leds";
-		led_0: led_0 {
-			gpios = <&gpio_led0 0>;
-			label = "USERLED0";
+		red_led: led_0 {
+			gpios = <&gpio1 1 GPIO_ACTIVE_HIGH>;
+			label = "User red led0";
 		};
 	};
-
-
-	cpus {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		cpu@0 {
-			device_type = "cpu";
-			compatible = "arm,cortex-m33";
-			reg = <0>;
-			#address-cells = <1>;
-			#size-cells = <1>;
-
-			// mpu: mpu@e000ed90 {
-			// 	compatible = "arm,armv8m-mpu";
-			// 	reg = <0xe000ed90 0x40>;
-			// 	arm,num-mpu-regions = <16>;
-			// };
-		};
-	};
-
-	sram0: memory@0x2000000 {
-		compatible = "mmio-sram";
-		reg = <0x2000000 DT_SIZE_K(512)>; //TODO: leave space AREA_OVERHEAD
-	};
-
-	// soc {
-	// 	peripheral@50000000 {
-	// 		#address-cells = <1>;
-	// 		#size-cells = <1>;
-	// 		ranges = <0x0 0x50000000 0x10000000>;
-
-	// 		#include <Renesas/DA14699/DA14699.dtsi>
-	// 	};
-	// };
 };
 
-
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-
-// /dts-v1/;
-// #include <mem.h>
-// #include <arm/armv8-m.dtsi>
-
-// / {
-//         model = "Renesas Electronics DA14699";
-//         compatible = "Renesas", "DA14699";
-
-//         chosen {
-//                 zephyr,console = &uart0;
-//                 zephyr,shell = &uart0;
-//                 zephyr,sram = &sram2_3;
-//         };
-
-//         cpus {
-//         #address-cells = <1>;
-//         #size-cells = <0>;
-
-//                 cpu@0 {
-//                         device_type = "cpu";
-//                         compatible = "arm,cortex-m33";
-//                         reg = <0>;
-//                         #address-cells = <1>;
-//                         #size-cells = <1>;
-
-//                         mpu: mpu@e000ed90 {
-//                                 compatible = "arm,armv8m-mpu";
-//                                 reg = <0xe000ed90 0x40>;
-//                                 arm,num-mpu-regions = <16>;
-//                         };
-//         };
-
-// 	sram1: memory@10000000 {
-// 		compatible = "mmio-sram";
-// 		reg = <0x10000000 DT_SIZE_M(4)>;
-// 	};
-
-// 	sram2_3: memory@38000000 {
-// 		compatible = "mmio-sram";
-// 		reg = <0x38000000 DT_SIZE_M(4)>;
-// 	};
-
-// 	psram: memory@80000000 {
-// 		device_type = "memory";
-// 		reg = <0x80000000 DT_SIZE_M(16)>;
-// 	};
-// };
-
-
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-
-
-// #include <Renesas/DA14699/DA14699.dtsi>
-
-// / {
-//      model = "Renesas Electronics DA14699";
-//      compatible = "Renesas", "DA14699";
-
-//      chosen {
-//         //      zephyr,console = &uart0;
-//         //      zephyr,shell = &uart0;
-//              zephyr,sram = &sram0;
-//              /* other chosen settings  for your hardware */
-//      };
-
-// //      /*
-// //       * Your board-specific hardware: buttons, LEDs, sensors, etc.
-// //       */
-
-// //       	cpus {
-// // 		#address-cells = <1>;
-// // 		#size-cells = <0>;
-
-// // 		cpu@0 {
-// // 			device_type = "cpu";
-// // 			compatible = "arm,cortex-m33";
-// // 			reg = <0>;
-// // 			#address-cells = <1>;
-// // 			#size-cells = <1>;
-
-// // 			mpu: mpu@e000ed90 {
-// // 				compatible = "arm,armv8m-mpu";
-// // 				reg = <0xe000ed90 0x40>;
-// // 				arm,num-mpu-regions = <16>;
-// // 			};
-// // 		};
-// // 	};
-// };
-
-// &sram0 {
-// 	reg = <0x800000 DT_SIZE_K(512)>;
-// };
-
-// // &uart0 {
-// // 	current-speed = <115200>;
-// // 	status = "okay";
-// // };
-		

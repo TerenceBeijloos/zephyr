@@ -1,0 +1,16 @@
+description: DA1469x GPIO node
+
+compatible: "renesas,DA1469x-gpio"
+
+include: [gpio-controller.yaml, base.yaml]
+
+properties:
+    label:
+      required: true
+
+    "#gpio-cells":
+      const: 2
+
+gpio-cells:
+  - pin
+  - flags
