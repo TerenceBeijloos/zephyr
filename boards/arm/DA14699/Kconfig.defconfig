@@ -1,6 +1,0 @@
-if BOARD_DA14699
-
-config BOARD
-   default "DA14699"
-
-endif # BOARD_DA14699

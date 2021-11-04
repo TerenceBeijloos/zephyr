@@ -9,10 +9,10 @@
 
 
 #include "skeleton.dtsi"
-#include <Renesas/DA14699/DA14699.dtsi>   
+#include <Renesas/da1469x_dev_kit_pro/DA1469x.dtsi>   
 
 / {   
-	compatible = "renesas,DA1469x";
+	compatible = "renesas,da1469x_dev_kit_pro";
 	#address-cells = <1>;
 	#size-cells = <1>;
 

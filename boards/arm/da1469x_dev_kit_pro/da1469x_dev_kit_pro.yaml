@@ -1,0 +1,11 @@
+identifier: da1469x_dev_kit_pro
+name: DA1469x development kit pro
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - zephyr
+  - xtools
+supported:
+  - gpio
+ram: 512

@@ -1,7 +1,0 @@
-config BOARD_DA14699
-	bool "DA14699 dual core BLE SOC"
-	depends on SOC_SERIES_DA1469x
-	select SOC_PART_NUMBER_DA14699
-
-config SOC_DA14699
-	bool "SOC_DA14699"

@@ -7,6 +7,6 @@ if SOC_FAMILY_DA1469X
 
 config SOC_FAMILY
 	string
-	default "DA1469x"
+	default "da1469x"
 
 endif # SOC_FAMILY_DA1469X
