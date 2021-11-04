@@ -1,0 +1,1 @@
+dtc -W  -O dts -o - -b 0 -E unit_address_vs_reg build\\zephyr\\DA14699.dts.pre.tmp

@@ -1,0 +1,12 @@
+
+
+config SOC_FAMILY_DA1469X
+	bool
+
+if SOC_FAMILY_DA1469X
+
+config SOC_FAMILY
+	string
+	default "DA1469x"
+
+endif # SOC_FAMILY_DA1469X

@@ -2,6 +2,9 @@
 
 add_subdirectory_ifdef(CONFIG_CPU_CORTEX_M common/cortex_m)
 
+message("soc family:")
+message(${SOC_FAMILY})
+
 if(SOC_FAMILY)
   add_subdirectory(${SOC_FAMILY})
 else()

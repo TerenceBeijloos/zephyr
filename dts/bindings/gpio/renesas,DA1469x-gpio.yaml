@@ -1,10 +1,13 @@
 description: DA1469x GPIO node
 
 compatible: "renesas,DA1469x-gpio"
-
+            
 include: [gpio-controller.yaml, base.yaml]
 
 properties:
+    reg:
+      required: true
+
     label:
       required: true
 
