@@ -1,7 +1,7 @@
 if SOC_SERIES_DA1469X
 
 config SOC_SERIES
-	default "da1469x"
+	default "da14699"
 
 source "soc/arm/da1469x/da14699/Kconfig.defconfig.da1469*"
 

@@ -571,6 +571,7 @@ Hints:
 endforeach()
 
 if(NOT SOC_DIR)
+  message("expected SOC DIR ${root}/soc/${ARCH}/${SOC_PATH}/soc")
   message(FATAL_ERROR "Could not find SOC=${SOC_NAME} for BOARD=${BOARD}, \
 please check your installation. SOC roots searched: \n\
 ${SOC_ROOT}")
