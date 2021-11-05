@@ -1,0 +1,1 @@
+#include <arch/arm/aarch32/cortex_m/scripts/linker.ld>
