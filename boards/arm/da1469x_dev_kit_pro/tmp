@@ -1,0 +1,6 @@
+board/plank     =   da1469x_dev_kit_pro
+BOARD_PLANK     =   BOARD_DA1469X_DEV_KIT_PRO
+SOC_SERIES      =   SOC_SERIES_DA1469X
+SOC_PART_NUMBER =   SOC_PART_NUMBER_DA14699
+SOC_FAMILY      =   da1469x
+SOC             =   SOC_DA14699
