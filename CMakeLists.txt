@@ -721,6 +721,7 @@ foreach(zephyr_lib ${ZEPHYR_LIBS_PROPERTY})
      AND NOT ${zephyr_lib} STREQUAL app
   )
     get_property(source_list  TARGET ${zephyr_lib} PROPERTY SOURCES)
+    message("source_list: ${source_list}") # TODO: remove
     get_property(lib_imported TARGET ${zephyr_lib} PROPERTY IMPORTED)
     if(NOT source_list
        AND NOT ${lib_imported}

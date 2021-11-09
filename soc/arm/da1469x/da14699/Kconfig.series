@@ -3,5 +3,6 @@ config SOC_SERIES_DA1469X
 	select ARM
 	select CPU_CORTEX_M33
 	select SOC_FAMILY_DA1469X
+	select HAS_DA1469X_GPIO
 	help
 	  Enable support for DA1469c dual core ble devices

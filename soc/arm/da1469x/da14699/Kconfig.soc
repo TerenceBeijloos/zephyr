@@ -12,4 +12,7 @@ if SOC_SERIES_DA1469X
 config SOC_PART_NUMBER_DA14699
 	bool
 
+config GPIO_DA1469X
+	default y
+
 endif # SOC_SERIES_DA1469X

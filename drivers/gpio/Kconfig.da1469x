@@ -1,0 +1,5 @@
+config GPIO_DA1469X
+	bool "DA1469X GPIO driver"
+	depends on HAS_DA1469X_GPIO
+	help
+	  Enable the DA1469x GPIO driver.

@@ -3,9 +3,6 @@
 
 // TODO:  license
 
-#include <sys/util.h>
-#include <zephyr/types.h>
-
 struct DA1469x_GPIO{                                /*!< (@ 0x50020A00) GPIO Structure                                             */
   __IOM uint32_t  P0_DATA_REG;                  /*!< (@ 0x00000000) P0 Data input / output Register                            */
   __IOM uint32_t  P1_DATA_REG;                  /*!< (@ 0x00000004) P1 Data input / output Register                            */
