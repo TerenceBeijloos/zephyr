@@ -23,10 +23,11 @@
  */
 /* Copyright (c) 2017-2019 Modified by Dialog Semiconductor */
 
-
+#include "custom_config_ram.h"
 #include "system_DA1469x.h"
 #include "sdk_defs.h"
 #include "bsp_defaults_da1469x.h"
+#include "interrupts.h"
 
 /*----------------------------------------------------------------------------
   Define clocks

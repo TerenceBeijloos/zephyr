@@ -2,3 +2,6 @@ config BOARD_DA1469X_DEV_KIT_PRO
    bool "DA1469x dual core BLE SOC series board"
    depends on SOC_SERIES_DA1469X
    select SOC_PART_NUMBER_DA14699
+
+config dg_configUSE_HW_SYS
+   bool "config use HW SYS"

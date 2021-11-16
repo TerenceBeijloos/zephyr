@@ -26,6 +26,7 @@
 #define __SDK_DEFS_H__
 
 #include <stddef.h>
+#include "custom_config_ram.h"
 
 #ifdef __cplusplus
  extern "C" {
