@@ -1,10 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
-add_subdirectory(hw)
-zephyr_include_directories(hw)
 
-add_subdirectory(bsp)
-zephyr_include_directories(bsp)
+    add_subdirectory(bsp)
+add_subdirectory(middleware)
 
 zephyr_sources(soc.c)
-zephyr_sources(init_da1469x.c)
+
+message("######################################\n\n${TOOLCHAIN_C_FLAGS}######################################\n\n")
+# list(APPEND TOOLCHAIN_C_FLAGS
+# -imacros${ZEPHYR_BASE}/soc/${ARCH}/${SOC_FAMILY}/${SOC_SERIES}/DA1469x_helper_defines.h
+# )
+
+
+
+# message("ZEPHYR BASE#####################################################" ${AUTOCONF_H})

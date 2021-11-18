@@ -1,6 +1,6 @@
-
+#include "DA1469x_helper_defines.h"
+#include "custom_config.h"
 #include "soc.h"
-#include "custom_config_ram.h"
 #include <init.h>
 #include "system_DA1469x.h"
 
