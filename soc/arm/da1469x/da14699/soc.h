@@ -6,7 +6,9 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-
+#if defined(CONFIG_dg_configUSE_HW_SYS) && !defined(dg_configUSE_HW_SYS)
+#define dg_configUSE_HW_SYS CONFIG_dg_configUSE_HW_SYS
+#endif
 /*
  * CMSIS IRQn_Type enum is broken relative to ARM GNU compiler.
  *

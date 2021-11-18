@@ -1,5 +1,6 @@
-#include "custom_config_ram.h"
+
 #include "soc.h"
+#include "custom_config_ram.h"
 #include <init.h>
 #include "system_DA1469x.h"
 

@@ -20,20 +20,19 @@
 *
 ****************************************************************************************
 */
-
-#ifdef CONFIG_dg_configUSE_HW_SYS && !defined(dg_configUSE_HW_SYS)
+#if defined(CONFIG_dg_configUSE_HW_SYS) && !defined(dg_configUSE_HW_SYS)
 #define dg_configUSE_HW_SYS CONFIG_dg_configUSE_HW_SYS
 #endif
 
 #if dg_configUSE_HW_SYS
 
 #include <stdint.h>
+#include "sys_tcs_da1469x.h"
 #include "hw_cpm.h"
 #include "hw_clk.h"
 #include "hw_pd.h"
 #include "hw_sys.h"
 #include "hw_gpio.h"
-#include "sys_tcs_da1469x.h"
 
 #define SW_CURSOR_GPIO                  *(SW_CURSOR_PORT == 0 ? \
                                                 (SW_CURSOR_PIN == 0 ? &(GPIO->P0_00_MODE_REG) : \

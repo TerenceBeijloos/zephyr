@@ -1,6 +1,7 @@
 #include "custom_config_ram.h"
 #include "sdk_defs.h"
 #include <core_cm33.h>
+#include "hw_bod.h"
 #include "hw_cache.h"
 #include "hw_pd.h"
 #include "hw_qspi.h"
