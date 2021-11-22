@@ -55,7 +55,7 @@ extern uint8_t __HeapLimit;
 /*
  * Global variables
  */
-__RETAINED_RW static uint8_t *heapend = &end;
+__RETAINED_RW static uint8_t *heapend = (uint8_t*)0x35;//&end; 0x35 == __HeapBase
 __RETAINED_RW uint32_t SystemLPClock = dg_configXTAL32K_FREQ;   /*!< System Low Power Clock Frequency (LP Clock) */
 
 
@@ -565,7 +565,7 @@ void da1469x_SystemInit(void)
          * Initialize busy status register
          */
         hw_sys_sw_bsr_init();
-
+        
         /*
          * Apply default priorities to interrupts.
          */
@@ -691,6 +691,7 @@ void da1469x_SystemInit(void)
         hw_sys_pll_calculate_min_current();
         hw_sys_pll_set_min_current();
 
+        
         /*
          * BOD protection
          */

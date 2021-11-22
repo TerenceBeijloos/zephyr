@@ -325,6 +325,7 @@ void sys_tcs_get_reg_pairs(SYS_TCS_GID gid, uint32_t **values, uint8_t *size)
         }
 }
 
+
 __RETAINED_CODE void sys_tcs_apply_reg_pairs(SYS_TCS_GID gid)
 {
         if (tcs_data == NULL) {

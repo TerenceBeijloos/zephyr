@@ -16,6 +16,7 @@ add_subdirectory(memory/include)
 add_subdirectory(memory/src)
 zephyr_include_directories(memory/include)
 
+add_subdirectory(system/sys_man)
 add_subdirectory(system/sys_man/include)
 zephyr_include_directories(system/sys_man/include)
 

@@ -3,10 +3,14 @@
 #include "soc.h"
 #include <init.h>
 #include "system_DA1469x.h"
+#include "hw_gpio.h"
 
 static int da1469x_system_init_wrapper(const struct device *dev)
-{
-    SystemInit();
+{   
+    // SystemInit();
+
+    CoreDebug->DEMCR = 0;
+
     return 0;
 }
 
