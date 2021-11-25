@@ -1,15 +1,49 @@
-#include <arch/arm/aarch32/cortex_m/scripts/linker.ld>
-#if 0
-MEMORY
-{
-    FLASH (rx)  : ORIGIN = (0x16008000), LENGTH = (384 * 1024)
-    RAM (rw)    : ORIGIN = (0x20000000), LENGTH = (512 * 1024)
-}
+/* Linker script for Nordic Semiconductor nRF5 devices
+ *
+ * Version: Sourcery G++ 4.5-1
+ * Support: https://support.codesourcery.com/GNUToolchain/
+ *
+ * Copyright (c) 2007, 2008, 2009, 2010 CodeSourcery, Inc.
+ *
+ * The authors hereby grant permission to use, copy, modify, distribute,
+ * and license this software and its documentation for any purpose, provided
+ * that existing copyright notices are retained in all copies and that this
+ * notice is included verbatim in any distributions.  No written agreement,
+ * license, or royalty fee is required for any of the authorized uses.
+ * Modifications to this software may be copyrighted by their authors
+ * and need not follow the licensing terms described here, provided that
+ * the new terms are clearly indicated on the first page of each file where
+ * they apply.
+ */
+OUTPUT_FORMAT ("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 
-/* This linker script is used for images and thus contains an image header */
-_imghdr_size = 0x20;
-
-
+/* Linker script to place sections and symbol values. Should be used together
+ * with other linker script that defines memory regions FLASH and RAM.
+ * It references following symbols, which must be defined in code:
+ *   Reset_Handler : Entry of reset handler
+ *
+ * It defines following symbols, which code can use without definition:
+ *   __exidx_start
+ *   __exidx_end
+ *   __etext
+ *   __data_start__
+ *   __preinit_array_start
+ *   __preinit_array_end
+ *   __init_array_start
+ *   __init_array_end
+ *   __fini_array_start
+ *   __fini_array_end
+ *   __data_end__
+ *   __bss_start__
+ *   __bss_end__
+ *   __HeapBase
+ *   __HeapLimit
+ *   __StackLimit
+ *   __StackTop
+ *   __stack
+ *   __bssnz_start__
+ *   __bssnz_end__
+ */
 ENTRY(Reset_Handler)
 
 SECTIONS
@@ -200,4 +234,3 @@ SECTIONS
     ASSERT(__intvect_start__ == ORIGIN(RAM), "intvect is not at beginning of RAM")
 }
 
-#endif

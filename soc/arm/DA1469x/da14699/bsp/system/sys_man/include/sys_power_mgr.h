@@ -28,6 +28,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "sdk_defs.h"
 #ifdef OS_FREERTOS
 #include "osal.h"
 #endif

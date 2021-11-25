@@ -23,21 +23,21 @@
 		};
 	};
 
-	sram0: memory@2000000 {
+	sram0: memory@20000000 {
 		compatible = "mmio-sram";
-		reg = <0x2000000 DT_SIZE_K(512)>; //TODO: leave space AREA_OVERHEAD
+		reg = <0x20000000 DT_SIZE_K(512)>; //TODO: leave space AREA_OVERHEAD
 	};
 
 	
 	soc {
 		flash0: flash@0 {
 			compatible = "soc-nv-flash";
-			reg = <0 DT_SIZE_K(128)>; //TODO: update 128 to the actual flash size
+			reg = <0 DT_SIZE_K(384)>; 
 		};
 
-		gpio1: gpio@40006000 {
+		gpio1: gpio@50020A98 {
 			compatible = "renesas,DA1469x-gpio";
-			reg = <0x40006000 0x1000>;
+			reg = <0x50020A98 0x58>;
 			gpio-controller;
 			label = "GPIO1";
 			#gpio-cells = <2>; 

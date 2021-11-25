@@ -29,11 +29,6 @@
 
 void main(void)
 {
-	while (1)
-	{
-		k_msleep(SLEEP_TIME_MS);
-	}
-	
 	const struct device *dev;
 	bool led_is_on = true;
 	int ret;

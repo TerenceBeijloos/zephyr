@@ -26,7 +26,7 @@
 
 #include "bsp_definitions.h"
 
-#define OS_BAREMETAL
+// #define OS_BAREMETAL
 
 #define __HEAP_SIZE                             0x2000
 

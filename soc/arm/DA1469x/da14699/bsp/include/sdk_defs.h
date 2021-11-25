@@ -41,7 +41,7 @@
 #  endif
 #endif
 
-#include "custom_config.h"
+// #include "custom_config.h"s
 
 #include "DA1469xAB.h"
 
