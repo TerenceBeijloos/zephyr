@@ -21,3 +21,6 @@ add_subdirectory(startup/DA1469x)
 
 add_subdirectory(snc/include)
 zephyr_include_directories(snc/include)
+
+add_subdirectory(snc/src)
+zephyr_include_directories(snc/src)

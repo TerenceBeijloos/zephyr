@@ -18,6 +18,8 @@
 
 #define CONFIG_USE_BLE
 
+#define OS_BAREMETAL
+
 /*************************************************************************************************\
  * System configuration
  */

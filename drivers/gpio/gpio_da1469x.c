@@ -1,6 +1,6 @@
 #define DT_DRV_COMPAT renesas_da1469x_gpio
 
-#include "custom_config.h"
+// #include "custom_config.h"
 #include <stdint.h>
 #include <drivers/gpio.h>
 #include "gpio_da1469x.h"
