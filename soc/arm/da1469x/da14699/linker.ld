@@ -1,203 +1,205 @@
 #include <arch/arm/aarch32/cortex_m/scripts/linker.ld>
-#if 0
+
+
 MEMORY
 {
-    FLASH (rx)  : ORIGIN = (0x16008000), LENGTH = (384 * 1024)
+    /* FLASH (rx)  : ORIGIN = (0x16008000), LENGTH = (384 * 1024) */
     RAM (rw)    : ORIGIN = (0x20000000), LENGTH = (512 * 1024)
+    ROM (rx)    : ORIGIN = (0x0),        LENGTH = (370 * 1024)
 }
 
-/* This linker script is used for images and thus contains an image header */
-_imghdr_size = 0x20;
-
-
+GROUP(libgcc.a libc.a libm.a libnosys.a)
 ENTRY(Reset_Handler)
-
 SECTIONS
 {
-    .imghdr (NOLOAD):
-    {
-        . = . + _imghdr_size;
-    } > FLASH
-
-    __text = .;
-
-    .text :
-    {
-        __isr_vector_start = .;
-        KEEP(*(.isr_vector))
-        /* ISR vector shall have exactly 512 bytes */
-        . = __isr_vector_start + 0x200;
-        __isr_vector_end = .;
-
-        *(.text)
-        *(.text.*)
-
-        *(.libcmac.rom)
-
-        KEEP(*(.init))
-        KEEP(*(.fini))
-
-        . = ALIGN(4);
-        /* preinit data */
-        PROVIDE_HIDDEN (__preinit_array_start = .);
-        KEEP(*(.preinit_array))
-        PROVIDE_HIDDEN (__preinit_array_end = .);
-
-        . = ALIGN(4);
-        /* init data */
-        PROVIDE_HIDDEN (__init_array_start = .);
-        KEEP(*(SORT(.init_array.*)))
-        KEEP(*(.init_array))
-        PROVIDE_HIDDEN (__init_array_end = .);
-
-        . = ALIGN(4);
-        /* finit data */
-        PROVIDE_HIDDEN (__fini_array_start = .);
-        KEEP(*(SORT(.fini_array.*)))
-        KEEP(*(.fini_array))
-        PROVIDE_HIDDEN (__fini_array_end = .);
-
-        /* .ctors */
-        *crtbegin.o(.ctors)
-        *crtbegin?.o(.ctors)
-        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
-        *(SORT(.ctors.*))
-        *(.ctors)
-
-        /* .dtors */
-        *crtbegin.o(.dtors)
-        *crtbegin?.o(.dtors)
-        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
-        *(SORT(.dtors.*))
-        *(.dtors)
-
-        *(.rodata*)
-
-        *(.eh_frame*)
-        . = ALIGN(4);
-    } > FLASH
-
-    .ARM.extab :
-    {
-        *(.ARM.extab* .gnu.linkonce.armextab.*)
-        . = ALIGN(4);
-    } > FLASH
-
-    __exidx_start = .;
-    .ARM.exidx :
-    {
-        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-        . = ALIGN(4);
-    } > FLASH
-    __exidx_end = .;
-
-    .intvect :
-    {
-        . = ALIGN(4);
-        __intvect_start__ = .;
-        . = . + (__isr_vector_end - __isr_vector_start);
-        . = ALIGN(4);
-    } > RAM
-
-    .sleep_state (NOLOAD) :
-    {
-        . = ALIGN(4);
-        *(sleep_state)
-    } > RAM
-
-    /* This section will be zeroed by RTT package init */
-    .rtt (NOLOAD):
-    {
-        . = ALIGN(4);
-        *(.rtt)
-        . = ALIGN(4);
-    } > RAM
-
-    __text_ram_addr = LOADADDR(.text_ram);
-
-    .text_ram :
-    {
-        . = ALIGN(4);
-        __text_ram_start__ = .;
-        *(.text_ram*)
-        . = ALIGN(4);
-        __text_ram_end__ = .;
-    } > RAM AT > FLASH
-
-    __etext = LOADADDR(.data);
-
-    .data :
-    {
-        __data_start__ = .;
-        *(vtable)
-        *(.data*)
-
-        *(.jcr)
-        . = ALIGN(4);
-        /* All data end */
-        __data_end__ = .;
-    } > RAM AT > FLASH
-
-    .bssnz :
-    {
-        . = ALIGN(4);
-        __bssnz_start__ = .;
-        *(.bss.core.nz*)
-        . = ALIGN(4);
-        __bssnz_end__ = .;
-    } > RAM
-
-    .bss :
-    {
-        . = ALIGN(4);
-        __bss_start__ = .;
-        *(.bss*)
-        *(COMMON)
-        . = ALIGN(4);
-        __bss_end__ = .;
-    } > RAM
-
-    .cmac (NOLOAD) :
-    {
-        . = ALIGN(0x400);
-        *(.libcmac.ram)
-    } > RAM
-
-    /* Heap starts after BSS */
-    . = ALIGN(8);
-    __HeapBase = .;
-
-    /* .stack_dummy section doesn't contains any symbols. It is only
-     * used for linker to calculate size of stack sections, and assign
-     * values to stack symbols later */
-    .stack_dummy (COPY):
-    {
-        *(.stack*)
-    } > RAM
-
-    /* Dummy section to calculate whether we need to move stack out of MTB
-     * buffer or not. */
-    .mtb (NOLOAD) :
-    {
-        KEEP(*(.mtb));
-    }
-
-    _ram_start = ORIGIN(RAM);
-
-    /* Set stack top to end of RAM, and stack limit move down by
-     * size of stack_dummy section */
-    __StackTop = ORIGIN(RAM) + LENGTH(RAM) - SIZEOF(.mtb);
-    __StackLimit = __StackTop - SIZEOF(.stack_dummy);
-    PROVIDE(__stack = __StackTop);
-
-    /* Top of head is the bottom of the stack */
-    __HeapLimit = __StackLimit;
-
-    /* Check if data + heap + stack exceeds RAM limit */
-    ASSERT(__HeapBase <= __HeapLimit, "region RAM overflowed with stack")
-
-    /* Check that intvect is at the beginning of RAM */
-    ASSERT(__intvect_start__ == ORIGIN(RAM), "intvect is not at beginning of RAM")
-}
-
-#endif
+        .init_text :
+        {
+                KEEP(*(.isr_vector))
+                . = 0x200;
+                __Vectors_End = .;
+                __Vectors_Size = __Vectors_End - __isr_vector;
+                *(text_reset*)
+        } > ROM
+        .text :
+        {
+                *(EXCLUDE_FILE(*libnosys.a:sbrk.o
+                               *libgcc.a:_aeabi_uldivmod.o
+                               *libgcc.a:_muldi3.o
+                               *libgcc.a:_dvmd_tls.o
+                               *libgcc.a:bpabi.o
+                               *libgcc.a:_udivdi3.o
+                               *libgcc.a:_clzdi2.o
+                               *libgcc.a:_clzsi2.o) .text*)
+                . = ALIGN(4);
+                __start_adapter_init_section = .;
+                KEEP(*(adapter_init_section))
+                __stop_adapter_init_section = .;
+                __start_bus_init_section = .;
+                KEEP(*(bus_init_section))
+                __stop_bus_init_section = .;
+                __start_device_init_section = .;
+                KEEP(*(device_init_section))
+                __stop_device_init_section = .;
+                KEEP(*(.init))
+                KEEP(*(.fini))
+                *crtbegin.o(.ctors)
+                *crtbegin?.o(.ctors)
+                *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+                *(SORT(.ctors.*))
+                *(.ctors)
+                *crtbegin.o(.dtors)
+                *crtbegin?.o(.dtors)
+                *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+                *(SORT(.dtors.*))
+                *(.dtors)
+                . = ALIGN(4);
+                PROVIDE_HIDDEN (__preinit_array_start = .);
+                KEEP(*(.preinit_array))
+                PROVIDE_HIDDEN (__preinit_array_end = .);
+                . = ALIGN(4);
+                PROVIDE_HIDDEN (__init_array_start = .);
+                KEEP(*(SORT(.init_array.*)))
+                KEEP(*(.init_array))
+                PROVIDE_HIDDEN (__init_array_end = .);
+                . = ALIGN(4);
+                PROVIDE_HIDDEN (__fini_array_start = .);
+                KEEP(*(SORT(.fini_array.*)))
+                KEEP(*(.fini_array))
+                PROVIDE_HIDDEN (__fini_array_end = .);
+                *(.rodata*)
+                KEEP(*(.eh_frame*))
+        } > ROM
+        .ARM.extab :
+        {
+                *(.ARM.extab* .gnu.linkonce.armextab.*)
+        } > ROM
+        __exidx_start = .;
+        .ARM.exidx :
+        {
+                *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        } > ROM
+        __exidx_end = .;
+        .copy.table :
+        {
+                . = ALIGN(4);
+                __copy_table_start__ = .;
+                LONG (__etext)
+                LONG (__retention_ram_init_start__)
+                LONG ((__retention_ram_init_end__ - __retention_ram_init_start__))
+                LONG (__etext + ((__retention_ram_init_end__ - __retention_ram_init_start__)))
+                LONG (__snc_section_start__)
+                LONG ((__snc_section_end__ - __snc_section_start__))
+                LONG (__etext + ((__retention_ram_init_end__ - __retention_ram_init_start__)) + ((__snc_section_end__ - __snc_section_start__)))
+                LONG (__non_retention_ram_init_start__)
+                LONG ((__non_retention_ram_init_end__ - __non_retention_ram_init_start__))
+                __copy_table_end__ = .;
+        } > ROM
+        .zero.table :
+        {
+                . = ALIGN(4);
+                __zero_table_start__ = .;
+                LONG (__bss_start__)
+                LONG (__bss_end__ - __bss_start__)
+                LONG (__retention_ram_zi_start__)
+                LONG (__retention_ram_zi_end__ - __retention_ram_zi_start__)
+                __zero_table_end__ = .;
+        } > ROM
+        __etext = .;
+        .retention_ram_uninit (NOLOAD) :
+        {
+                __retention_ram_uninit_start__ = .;
+                ASSERT( . == ORIGIN(RAM), ".retention_ram_uninit section moved!");
+                KEEP(*(nmi_info))
+                KEEP(*(hard_fault_info))
+                KEEP(*(retention_mem_uninit))
+                ASSERT( . <= __retention_ram_uninit_start__ + (128),
+                        "retention_ram_uninit section overflowed! Increase dg_configRETAINED_UNINIT_SECTION_SIZE.");
+                . = __retention_ram_uninit_start__ + (128);
+                __retention_ram_uninit_end__ = .;
+        } > RAM
+        .retention_ram_init : AT (0x0 +__etext)
+        {
+                __retention_ram_init_start__ = .;
+                . = ALIGN(4);
+                *(text_retained)
+                *libnosys.a:sbrk.o (.text*)
+                *libgcc.a:_aeabi_uldivmod.o (.text*)
+                *libgcc.a:_muldi3.o (.text*)
+                *libgcc.a:_dvmd_tls.o (.text*)
+                *libgcc.a:bpabi.o (.text*)
+                *libgcc.a:_udivdi3.o (.text*)
+                *libgcc.a:_clzdi2.o (.text*)
+                *libgcc.a:_clzsi2.o (.text*)
+                *(privileged_data_init)
+                *(.retention)
+                *(vtable)
+                *(retention_mem_init)
+                *(retention_mem_const)
+                *libg_nano.a:* (.data*)
+                *libnosys.a:* (.data*)
+                *libgcc.a:* (.data*)
+                *libble_stack_da1469x.a:* (.data*)
+                *crtbegin.o (.data*)
+                KEEP(*(.jcr*))
+                . = ALIGN(4);
+                __retention_ram_init_end__ = .;
+        } > RAM
+        .retention_ram_zi (NOLOAD) :
+        {
+                __retention_ram_zi_start__ = .;
+                *(privileged_data_zi)
+                *(retention_mem_zi)
+                *libg_nano.a:* (.bss*)
+                *libnosys.a:* (.bss*)
+                *libgcc.a:* (.bss*)
+                *libble_stack_da1469x.a:* (.bss*)
+                *crtbegin.o (.bss*)
+                *(os_heap)
+                __HeapBase = .;
+                __end__ = .;
+                end = __end__;
+                KEEP(*(.heap*))
+                __HeapLimit = .;
+                __retention_ram_zi_end__ = .;
+        } > RAM
+        .stack_section (NOLOAD) :
+        {
+                . = . + 1;
+                . = ALIGN(8);
+                __StackLimit = .;
+                KEEP(*(.stack*))
+                . = ALIGN(8);
+                __StackTop = .;
+                PROVIDE(__stack = __StackTop);
+        } > RAM
+        .snc_section : AT (0x0 + __etext + ((__retention_ram_init_end__ - __retention_ram_init_start__)))
+        {
+                __snc_section_start__ = .;
+                . = ALIGN(4);
+                KEEP(*(.snc_region*))
+                . = ALIGN(4);
+                __snc_section_end__ = .;
+        } > RAM
+        __non_retention_ram_start__ = .;
+        .non_retention_ram_init : AT (0x0 + __etext + ((__retention_ram_init_end__ - __retention_ram_init_start__)) + ((__snc_section_end__ - __snc_section_start__)))
+        {
+                __non_retention_ram_init_start__ = .;
+                . = ALIGN(4);
+                *(EXCLUDE_FILE(*libg_nano.a:* *libnosys.a:* *libgcc.a:* *libble_stack_da1469x.a:* *crtbegin.o) .data*)
+                . = ALIGN(4);
+                __non_retention_ram_init_end__ = .;
+        } > RAM
+        .bss :
+        {
+                . = ALIGN(4);
+                __bss_start__ = .;
+                *(EXCLUDE_FILE(*libg_nano.a:* *libnosys.a:* *libgcc.a:* *libble_stack_da1469x.a:* *crtbegin.o) .bss*)
+                *(COMMON)
+                . = ALIGN(4);
+                __bss_end__ = .;
+        } > RAM
+        __non_retention_ram_end__ = .;
+        __unused_ram_start__ = . + 1;
+        ASSERT(__etext + (__retention_ram_init_end__ - __retention_ram_init_start__) + (__snc_section_end__ - __snc_section_start__) + (__non_retention_ram_init_end__ - __non_retention_ram_init_start__) <
+                        ORIGIN(ROM) + ( 0x07E000 ), "ROM space overflowed")
+} 
