@@ -19,12 +19,6 @@
 			reg = <0>;
 			#address-cells = <1>;
 			#size-cells = <1>;
-
-			mpu: mpu@e000ed90 {
-				compatible = "arm,armv8m-mpu";
-				reg = <0xe000ed90 0x40>;
-				arm,num-mpu-regions = <8>;
-			};
 		};
 		cpu@1 {
 			compatible = "arm,cortex-m33";
@@ -68,7 +62,7 @@
 
 		gpio1: gpio@50020a98 {
 			compatible = "renesas,DA1469x-gpio";
-			reg = <0x50020A98 0x58>;
+			reg = <0x50020A98 11>;
 			gpio-controller;
 			label = "GPIO1";
 			#gpio-cells = <2>; 

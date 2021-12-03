@@ -55,7 +55,6 @@ extern uint8_t __HeapLimit;
 /*
  * Global variables
  */
-__RETAINED_RW static uint8_t hardcodedHeapend[] = { 0x20, 0x00, 0x21, 0x24 };
 __RETAINED_RW static uint8_t* heapend = &end; 
 __RETAINED_RW uint32_t SystemLPClock = dg_configXTAL32K_FREQ;   /*!< System Low Power Clock Frequency (LP Clock) */
 

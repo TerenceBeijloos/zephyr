@@ -13,7 +13,9 @@
 
 / {   
 	compatible = "renesas,da1469x_dev_kit_pro";
-
+	#address-cells = <1>;
+	#size-cells = <1>;
+	
 	aliases {
 		led0 = &red_led;
 	};

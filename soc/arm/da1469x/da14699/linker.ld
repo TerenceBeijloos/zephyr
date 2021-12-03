@@ -1,9 +1,9 @@
 #include <arch/arm/aarch32/cortex_m/scripts/linker.ld>
 
 
-MEMORY
+/* MEMORY
 {
-    /* FLASH (rx)  : ORIGIN = (0x16008000), LENGTH = (384 * 1024) */
+    FLASH (rx)  : ORIGIN = (0x16008000), LENGTH = (384 * 1024)
     RAM (rw)    : ORIGIN = (0x20000000), LENGTH = (512 * 1024)
     ROM (rx)    : ORIGIN = (0x0),        LENGTH = (370 * 1024)
 }
@@ -31,6 +31,9 @@ SECTIONS
                                *libgcc.a:_clzdi2.o
                                *libgcc.a:_clzsi2.o) .text*)
                 . = ALIGN(4);
+                __cmi_fw_area_start = .;
+                KEEP(*(.cmi_fw_area*))
+                __cmi_fw_area_end = .;
                 __start_adapter_init_section = .;
                 KEEP(*(adapter_init_section))
                 __stop_adapter_init_section = .;
@@ -180,6 +183,15 @@ SECTIONS
                 . = ALIGN(4);
                 __snc_section_end__ = .;
         } > RAM
+        .cmi_section (NOLOAD) :
+        {
+                __cmi_section_start__ = .;
+                . = ALIGN(0x400);
+                cmi_fw_dst_addr = .;
+                . += (__cmi_fw_area_end - __cmi_fw_area_start);
+                . = ALIGN(0x400);
+                __cmi_section_end__ = . - 1;
+        } > RAM
         __non_retention_ram_start__ = .;
         .non_retention_ram_init : AT (0x0 + __etext + ((__retention_ram_init_end__ - __retention_ram_init_start__)) + ((__snc_section_end__ - __snc_section_start__)))
         {
@@ -202,4 +214,4 @@ SECTIONS
         __unused_ram_start__ = . + 1;
         ASSERT(__etext + (__retention_ram_init_end__ - __retention_ram_init_start__) + (__snc_section_end__ - __snc_section_start__) + (__non_retention_ram_init_end__ - __non_retention_ram_init_start__) <
                         ORIGIN(ROM) + ( 0x07E000 ), "ROM space overflowed")
-} 
+}   */

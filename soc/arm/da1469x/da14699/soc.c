@@ -14,10 +14,10 @@ static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
 static int da1469x_system_init_post_kernel_wrapper(const struct device *dev)
 {   
     SystemInit();
-    hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_1, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
-    hw_gpio_pad_latch_enable(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
-    hw_gpio_set_active(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
-    
+    // hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_1, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
+    // hw_gpio_pad_latch_enable(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
+    // hw_gpio_set_active(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
+
     return 0;
 }
 
@@ -28,4 +28,4 @@ hal_system_init(void)
 }
 
 SYS_INIT(da1469x_system_init_pre_kernel_wrapper, PRE_KERNEL_1, 0);
-SYS_INIT(da1469x_system_init_post_kernel_wrapper, POST_KERNEL, 1);
+SYS_INIT(da1469x_system_init_post_kernel_wrapper, POST_KERNEL, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
