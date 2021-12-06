@@ -5,6 +5,8 @@
 #include "hw_gpio.h"
 #include "hw_watchdog.h"
 
+
+
 static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
 {   
     hw_watchdog_freeze();

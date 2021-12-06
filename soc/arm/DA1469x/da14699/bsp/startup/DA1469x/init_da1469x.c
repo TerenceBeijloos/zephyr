@@ -51,11 +51,12 @@ extern uint32_t __zero_table_start__;
 extern uint32_t __zero_table_end__;
 extern uint8_t end;
 extern uint8_t __HeapLimit;
+extern uint32_t _k_heap_list_end;
 
 /*
  * Global variables
  */
-__RETAINED_RW static uint8_t* heapend = &end; 
+__RETAINED_RW static uint8_t* heapend = &_k_heap_list_end; 
 __RETAINED_RW uint32_t SystemLPClock = dg_configXTAL32K_FREQ;   /*!< System Low Power Clock Frequency (LP Clock) */
 
 
