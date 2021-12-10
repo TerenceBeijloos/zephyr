@@ -128,23 +128,23 @@ static const struct gpio_driver_api gpio_da1469x_driver = {
 	// .manage_callback = gpio_da1469x_manage_callback,
 };
 
-#define DA1469X_GPIO_DEVICE_INIT(inst)                                            \
-	static const struct gpio_da1469x_config gpio_da1469x_cfg_##inst = {          \
-		.common = {						       \
-			.port_pin_mask =                                       \
-			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
-		},                                                             \
-	};                                                                     \
-									       \
-	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
-									       \
-	DEVICE_DT_INST_DEFINE(inst,					       \
-			    gpio_da1469x_init,                                    \
-			    NULL,					       \
-			    &gpio_da1469x_data_##inst,                            \
-			    &gpio_da1469x_cfg_##inst,                             \
-			    POST_KERNEL,                                       \
-			    CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,	       \
-			    &gpio_da1469x_driver);
+// #define DA1469X_GPIO_DEVICE_INIT(inst)                                            \
+// 	static const struct gpio_da1469x_config gpio_da1469x_cfg_##inst = {          \
+// 		.common = {						       \
+// 			.port_pin_mask =                                       \
+// 			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
+// 		},                                                             \
+// 	};                                                                     \
+// 									       \
+// 	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
+// 									       \
+// 	DEVICE_DT_INST_DEFINE(inst,					       \
+// 			    gpio_da1469x_init,                                    \
+// 			    NULL,					       \
+// 			    &gpio_da1469x_data_##inst,                            \
+// 			    &gpio_da1469x_cfg_##inst,                             \
+// 			    POST_KERNEL,                                       \
+// 			    CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,	       \
+// 			    &gpio_da1469x_driver);
 
-DT_INST_FOREACH_STATUS_OKAY(DA1469X_GPIO_DEVICE_INIT);
+// DT_INST_FOREACH_STATUS_OKAY(DA1469X_GPIO_DEVICE_INIT);

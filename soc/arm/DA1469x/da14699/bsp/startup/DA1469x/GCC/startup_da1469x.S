@@ -31,6 +31,7 @@
 #define SYS_CTRL_REG                            0x50000024
 #define SYS_CTRL_REG_DEBUGGER_ENABLE_MSK        0x80
 
+
         	.syntax	unified
         	.arch	armv8-m.main
 

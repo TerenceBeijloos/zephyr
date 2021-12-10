@@ -239,9 +239,9 @@ static void init_idle_thread(int i)
 #else
 	char *tname = NULL;
 #endif /* CONFIG_THREAD_NAME */
-
+	size_t idle_stack_size = CONFIG_IDLE_STACK_SIZE;
 	z_setup_new_thread(thread, stack,
-			  CONFIG_IDLE_STACK_SIZE, idle, &_kernel.cpus[i],
+			  idle_stack_size, idle, &_kernel.cpus[i],
 			  NULL, NULL, K_IDLE_PRIO, K_ESSENTIAL,
 			  tname);
 	z_mark_thread_as_started(thread);

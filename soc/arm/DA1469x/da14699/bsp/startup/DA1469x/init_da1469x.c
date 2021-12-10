@@ -478,29 +478,29 @@ void SystemInitPre(void)
          * If any of the assertions below hits, please correct your linker script
          * file accordingly!
          */
-        if (dg_configIMAGE_SETUP == DEVELOPMENT_MODE) {
-                uint32_t *p;
+        // if (dg_configIMAGE_SETUP == DEVELOPMENT_MODE) {
+        //         uint32_t *p;
 
-                for (p = &__copy_table_start__; p < &__copy_table_end__; p += 3) {
-                        ASSERT_WARNING_UNINIT( (p[0] & 0x3) == 0 );     // from
-                        ASSERT_WARNING_UNINIT( (p[1] & 0x3) == 0 );     // to
-                        ASSERT_WARNING_UNINIT( (p[2] & 0x3) == 0 );     // size
-                }
-        }
+        //         for (p = &__copy_table_start__; p < &__copy_table_end__; p += 3) {
+        //                 ASSERT_WARNING_UNINIT( (p[0] & 0x3) == 0 );     // from
+        //                 ASSERT_WARNING_UNINIT( (p[1] & 0x3) == 0 );     // to
+        //                 ASSERT_WARNING_UNINIT( (p[2] & 0x3) == 0 );     // size
+        //         }
+        // }
 
         /*
          * Ensure 4-byte alignment for all elements of each entry in the Data Table.
          * If any of the assertions below hits, please correct your linker script
          * file accordingly!
          */
-        if (dg_configIMAGE_SETUP == DEVELOPMENT_MODE) {
-                uint32_t *p;
+        // if (dg_configIMAGE_SETUP == DEVELOPMENT_MODE) {
+        //         uint32_t *p;
 
-                for (p = &__zero_table_start__; p < &__zero_table_end__; p += 2) {
-                        ASSERT_WARNING_UNINIT( (p[0] & 0x3) == 0 );    // start at
-                        ASSERT_WARNING_UNINIT( (p[1] & 0x3) == 0 );    // size
-                }
-        }
+        //         for (p = &__zero_table_start__; p < &__zero_table_end__; p += 2) {
+        //                 ASSERT_WARNING_UNINIT( (p[0] & 0x3) == 0 );    // start at
+        //                 ASSERT_WARNING_UNINIT( (p[1] & 0x3) == 0 );    // size
+        //         }
+        // }
 
         /*
          * Clear all PDC entries and make sure SYS_SLEEP is 0.
@@ -583,7 +583,7 @@ void da1469x_SystemInit(void)
         /* Disable QSPI init after power up */
         hw_qspi_disable_init(HW_QSPIC);
         /* The bootloader may have left the Flash in wrong mode */
-        qspi_automode_init();
+        qspi_automode_init(); 
 
 #if ((dg_configCODE_LOCATION == NON_VOLATILE_IS_FLASH) && (dg_configEXEC_MODE == MODE_IS_CACHED))
         hw_cache_enable(cache_len);

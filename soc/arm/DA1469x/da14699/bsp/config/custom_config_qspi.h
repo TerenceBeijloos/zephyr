@@ -16,7 +16,7 @@
 
 #include "bsp_definitions.h"
 
-#define CONFIG_USE_BLE
+// #define CONFIG_USE_BLE
 
 #define OS_BAREMETAL
 
@@ -27,6 +27,8 @@
 #define dg_configEXEC_MODE                      ( MODE_IS_CACHED )
 #define dg_configCODE_LOCATION                  ( NON_VOLATILE_IS_FLASH )
 #define dg_configEMULATE_OTP_COPY               ( 0 )
+
+#define dg_configENABLE_DEBUGGER                (1)
 
 #define dg_configUSE_WDOG                       ( 0 )
 
