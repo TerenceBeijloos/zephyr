@@ -6,6 +6,7 @@
 
 /dts-v1/;
 
+#include <mem.h>
 #include <arm/armv8-m.dtsi>
 
 / {
@@ -20,10 +21,10 @@
 	};
 
 	chosen {
-		zephyr,console = &uart1;
+		// zephyr,console = &uart1;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
-		zephyr,shell-uart = &uart1;
+		// zephyr,shell-uart = &uart1;
 	};
 
 	leds {
@@ -66,9 +67,9 @@
 		reg = <0x1a000000 0x200000>;
 	};
 
-	sram0: memory@30000000 {
+	sram0: memory@20000000 {
 		compatible = "mmio-sram";
-		reg = <0x30000000 0x80000>;
+		reg = <0x20000000 DT_SIZE_K(512)>;
 	};
 
 	sysclk: system-clock {
@@ -95,5 +96,5 @@
 };
 
 &nvic {
-	arm,num-irq-priority-bits = <3>;
+	arm,num-irq-priority-bits = <4>;
 };
