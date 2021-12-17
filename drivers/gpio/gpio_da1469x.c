@@ -116,35 +116,61 @@ static int gpio_da1469x_config(const struct device *dev,
 	return 0;
 }
 
+
+static int gpio_da1469x_pin_interrupt_configure(const struct device *dev,
+					       gpio_pin_t gpio_num,
+					       enum gpio_int_mode mode,
+					       enum gpio_int_trig trig)
+{
+	//TODO
+	return 0;
+}
+
+static int gpio_da1469x_manage_callback(const struct device *dev,
+				       struct gpio_callback *callback, bool set)
+{
+	//TODO
+	return 0;
+}
+
+static int gpio_da1469x_port_set_masked_raw(const struct device *dev,
+					   uint32_t mask,
+					   uint32_t value)
+{
+	//TODO
+	return 0;
+}
+
+
 /* GPIO driver registration */
 static const struct gpio_driver_api gpio_da1469x_driver = {
 	.pin_configure = gpio_da1469x_config,
 	.port_get_raw = gpio_da1469x_port_get_raw,
-	// .port_set_masked_raw = gpio_da1469x_port_set_masked_raw,
+	.port_set_masked_raw = gpio_da1469x_port_set_masked_raw,
 	.port_set_bits_raw = gpio_da1469x_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_da1469x_port_clear_bits_raw,
 	.port_toggle_bits = gpio_da1469x_port_toggle_bits,
-	// .pin_interrupt_configure = gpio_da1469x_pin_interrupt_configure,
-	// .manage_callback = gpio_da1469x_manage_callback,
+	.pin_interrupt_configure = gpio_da1469x_pin_interrupt_configure,
+	.manage_callback = gpio_da1469x_manage_callback,
 };
 
-// #define DA1469X_GPIO_DEVICE_INIT(inst)                                            \
-// 	static const struct gpio_da1469x_config gpio_da1469x_cfg_##inst = {          \
-// 		.common = {						       \
-// 			.port_pin_mask =                                       \
-// 			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
-// 		},                                                             \
-// 	};                                                                     \
-// 									       \
-// 	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
-// 									       \
-// 	DEVICE_DT_INST_DEFINE(inst,					       \
-// 			    gpio_da1469x_init,                                    \
-// 			    NULL,					       \
-// 			    &gpio_da1469x_data_##inst,                            \
-// 			    &gpio_da1469x_cfg_##inst,                             \
-// 			    POST_KERNEL,                                       \
-// 			    CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,	       \
-// 			    &gpio_da1469x_driver);
+#define DA1469X_GPIO_DEVICE_INIT(inst)                                            \
+	static const struct gpio_da1469x_config gpio_da1469x_cfg_##inst = {          \
+		.common = {						       \
+			.port_pin_mask =                                       \
+			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
+		},                                                             \
+	};                                                                     \
+									       \
+	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
+									       \
+	DEVICE_DT_INST_DEFINE(inst,					       \
+			    gpio_da1469x_init,                                    \
+			    NULL,					       \
+			    &gpio_da1469x_data_##inst,                            \
+			    &gpio_da1469x_cfg_##inst,                             \
+			    POST_KERNEL,                                       \
+			    CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,	       \
+			    &gpio_da1469x_driver);
 
-// DT_INST_FOREACH_STATUS_OKAY(DA1469X_GPIO_DEVICE_INIT);
+DT_INST_FOREACH_STATUS_OKAY(DA1469X_GPIO_DEVICE_INIT);

@@ -2,12 +2,6 @@
 #include <mem.h>
 #include <arm/armv8-m.dtsi>
 
-// sysclk: system-clock {
-// 	compatible = "fixed-clock";
-// 	clock-frequency = <25000000>;
-// 	#clock-cells = <0>;
-// };
-
 / {
 
 	cpus: cpus {
@@ -20,9 +14,11 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 		};
-		cpu@1 {
-			compatible = "arm,cortex-m33";
-			reg = <1>;
+
+		mpu: mpu@e000ed90 {
+			compatible = "arm,armv8m-mpu";
+			reg = <0xe000ed90 0x40>;
+			arm,num-mpu-regions = <8>;
 		};
 	};
 
@@ -42,21 +38,21 @@
                 #address-cells = <1>;
                 #size-cells = <1>;
 
-                code_partition: partition@0 {
-                        label = "code";
-                        reg = <0x0 0xF0000>;
-                        read-only;
-                };
+                // code_partition: partition@0 {
+                //         label = "code";
+                //         reg = <0x0 0xF0000>;
+                //         read-only;
+                // };
 
-                /*
-                * The final 64 KiB is reserved for the application.
-                * Storage partition will be used by FCB/LittleFS/NVS
-                * if enabled.
-                */
-                storage_partition: partition@F0000 {
-                        label = "storage";
-                        reg = <0x000F0000 0x00100000>;
-                };
+                // /*
+                // * The final 64 KiB is reserved for the application.
+                // * Storage partition will be used by FCB/LittleFS/NVS
+                // * if enabled.
+                // */
+                // storage_partition: partition@F0000 {
+                //         label = "storage";
+                //         reg = <0x000F0000 0x00100000>;
+                // };
         	};
 		};
 

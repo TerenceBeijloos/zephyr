@@ -448,14 +448,6 @@ def main():
                                                                  full_list_of_sections,
                                                                  complete_list_of_sections)
 
-    #TODO: remove
-    print("\nGEN_RELOCATE_APP")
-    print("linker_file: ", linker_file)
-    print("sram_data_linker_file: ", sram_data_linker_file)
-    print("sram_bss_linker_file: ", sram_bss_linker_file)
-    print("complete_list_of_sections: ", complete_list_of_sections)
-    print("\n")
-    
     generate_linker_script(linker_file, sram_data_linker_file,
                            sram_bss_linker_file, complete_list_of_sections)
 

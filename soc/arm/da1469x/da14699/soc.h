@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#include <devicetree.h>
+#include <sys/util.h>
 #include "DA1469xAB.h"
 
 // #if defined(CONFIG_dg_configUSE_HW_SYS) && !defined(dg_configUSE_HW_SYS)
@@ -43,5 +45,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#include <core_cm33.h>                           /*!< ARM Cortex-M33 processor and core peripherals */
 
 #endif /* _SOC__H_ */

@@ -516,26 +516,26 @@ void SystemInitPre(void)
         /*
          * Initialize power domains
          */
-        GLOBAL_INT_DISABLE();
-        REG_SETF(CRG_TOP, PMU_CTRL_REG, RADIO_SLEEP, 1);
-        while (!REG_GETF(CRG_TOP, SYS_STAT_REG, RAD_IS_DOWN));
-        REG_SETF(CRG_TOP, PMU_CTRL_REG, PERIPH_SLEEP, 1);
-        while (!REG_GETF(CRG_TOP, SYS_STAT_REG, PER_IS_DOWN));
-        REG_SETF(CRG_TOP, PMU_CTRL_REG, COM_SLEEP, 1);
-        while (!REG_GETF(CRG_TOP, SYS_STAT_REG, COM_IS_DOWN));
-        /*
-         * PD_TIM is kept active so that XTAL and PLL registers
-         * can be programmed properly in SystemInit.
-         */
-        REG_SETF(CRG_TOP, PMU_CTRL_REG, TIM_SLEEP, 0);
-        while (!REG_GETF(CRG_TOP, SYS_STAT_REG, TIM_IS_UP));
-        GLOBAL_INT_RESTORE();
+        // GLOBAL_INT_DISABLE();
+        // REG_SETF(CRG_TOP, PMU_CTRL_REG, RADIO_SLEEP, 1);
+        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, RAD_IS_DOWN));
+        // REG_SETF(CRG_TOP, PMU_CTRL_REG, PERIPH_SLEEP, 1);
+        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, PER_IS_DOWN));
+        // REG_SETF(CRG_TOP, PMU_CTRL_REG, COM_SLEEP, 1);
+        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, COM_IS_DOWN));
+        // /*
+        //  * PD_TIM is kept active so that XTAL and PLL registers
+        //  * can be programmed properly in SystemInit.
+        //  */
+        // REG_SETF(CRG_TOP, PMU_CTRL_REG, TIM_SLEEP, 0);
+        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, TIM_IS_UP));
+        // GLOBAL_INT_RESTORE();
 
         /*
          * Keep CMAC core under reset
          */
-        REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_CLK_ENABLE, 0);
-        REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_SYNCH_RESET, 1);
+        // REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_CLK_ENABLE, 0);
+        // REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_SYNCH_RESET, 1);
 
         /*
          * Disable unused peripherals
@@ -552,15 +552,15 @@ void SystemInitPre(void)
         REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI_ENABLE, 0);
 #endif
 
-        REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI2_ENABLE, 0);
-        REG_SETF(CRG_TOP, CLK_AMBA_REG, AES_CLK_ENABLE, 0);
-        REG_SETF(CRG_TOP, CLK_AMBA_REG, TRNG_CLK_ENABLE, 0);
+        // REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI2_ENABLE, 0);
+        // REG_SETF(CRG_TOP, CLK_AMBA_REG, AES_CLK_ENABLE, 0);
+        // REG_SETF(CRG_TOP, CLK_AMBA_REG, TRNG_CLK_ENABLE, 0);
         REG_SETF(CRG_TOP, CLK_AMBA_REG, OTP_ENABLE, 0);
 }
 
 void da1469x_SystemInit(void)
 {
-        REG_SETF(CRG_TOP, POWER_CTRL_REG, LDO_RADIO_ENABLE, 1); // Switch on the RF LDO
+        // REG_SETF(CRG_TOP, POWER_CTRL_REG, LDO_RADIO_ENABLE, 1); // Switch on the RF LDO
 
         /*
          * Initialize busy status register
@@ -583,7 +583,7 @@ void da1469x_SystemInit(void)
         /* Disable QSPI init after power up */
         hw_qspi_disable_init(HW_QSPIC);
         /* The bootloader may have left the Flash in wrong mode */
-        qspi_automode_init(); 
+        qspi_automode_init();
 
 #if ((dg_configCODE_LOCATION == NON_VOLATILE_IS_FLASH) && (dg_configEXEC_MODE == MODE_IS_CACHED))
         hw_cache_enable(cache_len);
@@ -791,5 +791,4 @@ uint32_t black_orca_phy_addr(uint32_t addr)
 
         return phy_addr;
 }
-
 
