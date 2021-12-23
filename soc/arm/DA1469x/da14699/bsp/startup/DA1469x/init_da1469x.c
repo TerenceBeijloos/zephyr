@@ -29,6 +29,8 @@
 #include "sys_tcs.h"
 #include "sys_trng.h"
 
+#include "hw_watchdog.h"
+
 
 #if dg_configUSE_CLOCK_MGR
 #include "sys_clock_mgr.h"
@@ -56,7 +58,7 @@ extern uint32_t _k_heap_list_end;
 /*
  * Global variables
  */
-__RETAINED_RW static uint8_t* heapend = &_k_heap_list_end; 
+__RETAINED_RW static uint8_t* heapend = &_k_heap_list_end;
 __RETAINED_RW uint32_t SystemLPClock = dg_configXTAL32K_FREQ;   /*!< System Low Power Clock Frequency (LP Clock) */
 
 
@@ -516,26 +518,26 @@ void SystemInitPre(void)
         /*
          * Initialize power domains
          */
-        // GLOBAL_INT_DISABLE();
-        // REG_SETF(CRG_TOP, PMU_CTRL_REG, RADIO_SLEEP, 1);
-        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, RAD_IS_DOWN));
-        // REG_SETF(CRG_TOP, PMU_CTRL_REG, PERIPH_SLEEP, 1);
-        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, PER_IS_DOWN));
-        // REG_SETF(CRG_TOP, PMU_CTRL_REG, COM_SLEEP, 1);
-        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, COM_IS_DOWN));
-        // /*
-        //  * PD_TIM is kept active so that XTAL and PLL registers
-        //  * can be programmed properly in SystemInit.
-        //  */
-        // REG_SETF(CRG_TOP, PMU_CTRL_REG, TIM_SLEEP, 0);
-        // while (!REG_GETF(CRG_TOP, SYS_STAT_REG, TIM_IS_UP));
-        // GLOBAL_INT_RESTORE();
+         GLOBAL_INT_DISABLE();
+//         REG_SETF(CRG_TOP, PMU_CTRL_REG, RADIO_SLEEP, 1);
+//         while (!REG_GETF(CRG_TOP, SYS_STAT_REG, RAD_IS_DOWN));
+         REG_SETF(CRG_TOP, PMU_CTRL_REG, PERIPH_SLEEP, 1);
+         while (!REG_GETF(CRG_TOP, SYS_STAT_REG, PER_IS_DOWN));
+         REG_SETF(CRG_TOP, PMU_CTRL_REG, COM_SLEEP, 1);
+         while (!REG_GETF(CRG_TOP, SYS_STAT_REG, COM_IS_DOWN));
+         /*
+          * PD_TIM is kept active so that XTAL and PLL registers
+          * can be programmed properly in SystemInit.
+          */
+         REG_SETF(CRG_TOP, PMU_CTRL_REG, TIM_SLEEP, 0);
+         while (!REG_GETF(CRG_TOP, SYS_STAT_REG, TIM_IS_UP));
+         GLOBAL_INT_RESTORE();
 
         /*
          * Keep CMAC core under reset
          */
-        // REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_CLK_ENABLE, 0);
-        // REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_SYNCH_RESET, 1);
+//         REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_CLK_ENABLE, 0);
+//         REG_SETF(CRG_TOP, CLK_RADIO_REG, CMAC_SYNCH_RESET, 1);
 
         /*
          * Disable unused peripherals
@@ -552,9 +554,9 @@ void SystemInitPre(void)
         REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI_ENABLE, 0);
 #endif
 
-        // REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI2_ENABLE, 0);
-        // REG_SETF(CRG_TOP, CLK_AMBA_REG, AES_CLK_ENABLE, 0);
-        // REG_SETF(CRG_TOP, CLK_AMBA_REG, TRNG_CLK_ENABLE, 0);
+         REG_SETF(CRG_TOP, CLK_AMBA_REG, QSPI2_ENABLE, 0);
+         REG_SETF(CRG_TOP, CLK_AMBA_REG, AES_CLK_ENABLE, 0);
+         REG_SETF(CRG_TOP, CLK_AMBA_REG, TRNG_CLK_ENABLE, 0);
         REG_SETF(CRG_TOP, CLK_AMBA_REG, OTP_ENABLE, 0);
 }
 
@@ -566,7 +568,7 @@ void da1469x_SystemInit(void)
          * Initialize busy status register
          */
         hw_sys_sw_bsr_init();
-        
+
         /*
          * Apply default priorities to interrupts.
          */
@@ -692,7 +694,7 @@ void da1469x_SystemInit(void)
         hw_sys_pll_calculate_min_current();
         hw_sys_pll_set_min_current();
 
-        
+
         /*
          * BOD protection
          */
@@ -723,6 +725,13 @@ void da1469x_SystemInit(void)
         hw_pd_wait_power_down_com();
 #endif /* defined(CONFIG_USE_BLE) */
 #endif /* dg_configFPGA_AD9361_RADIO */
+
+        hw_watchdog_freeze();
+        hw_gpio_set_pin_function(HW_GPIO_PORT_1, HW_GPIO_PIN_1, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
+        hw_gpio_pad_latch_enable(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
+        hw_gpio_set_active(HW_GPIO_PORT_1, HW_GPIO_PIN_1);
+        while(1);
+
 }
 
 uint32_t black_orca_phy_addr(uint32_t addr)
