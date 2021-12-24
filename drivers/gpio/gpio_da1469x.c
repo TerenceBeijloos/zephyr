@@ -7,7 +7,7 @@
 #include "DA1469xAB.h"
 #include "gpio_utils.h"
 #include "sys_tcs.h"
-#include <devicetree.h>
+
 
 /* Register adresses */
 #define PX_DATA_REG_ADDR(_port)         ((volatile uint32_t *)(GPIO_BASE + offsetof(GPIO_Type, P0_DATA_REG)) + _port)
@@ -58,7 +58,7 @@ static int gpio_da1469x_port_set_bits_raw(const struct device *dev,
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-	hw_gpio_set_active(port, pin);
+	hw_gpio_set_active(cfg->port, pin);
 
 	return 0;
 }
