@@ -6,6 +6,8 @@
 #include "gpio_da1469x.h"
 #include "DA1469xAB.h"
 #include "gpio_utils.h"
+#include "sys_tcs.h"
+#include <devicetree.h>
 
 /* Register adresses */
 #define PX_DATA_REG_ADDR(_port)         ((volatile uint32_t *)(GPIO_BASE + offsetof(GPIO_Type, P0_DATA_REG)) + _port)
@@ -28,6 +30,12 @@ static int gpio_da1469x_init(const struct device *dev)
     //TODO
 	// __ASSERT(DRV_CONFIG(dev)->wui_size == NPCX_GPIO_PORT_PIN_NUM,
 	// 		"wui_maps array size must equal to its pin number");
+
+	hw_sys_pd_com_enable();
+    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_COMM);
+    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_SYS);
+    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_TMR);
+
 	return 0;
 }
 
@@ -50,7 +58,7 @@ static int gpio_da1469x_port_set_bits_raw(const struct device *dev,
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    PX_SET_DATA_REG(cfg->port) = 1 << pin;
+	hw_gpio_set_active(port, pin);
 
 	return 0;
 }
@@ -61,8 +69,8 @@ static int gpio_da1469x_port_clear_bits_raw(const struct device *dev,
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    PX_RESET_DATA_REG(cfg->port) = 1 << mask;
-    
+    hw_gpio_set_inactive(cfg->port, mask);
+
 	return 0;
 }
 
@@ -90,28 +98,9 @@ static int gpio_da1469x_config(const struct device *dev,
 {
     struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    //TODO: look at design patterns to prevent big if else structure
-    if (flags & GPIO_OUTPUT)
-    {
-        PXX_MODE_REG(cfg->port, pin) = HW_GPIO_MODE_OUTPUT | HW_GPIO_FUNC_GPIO;
-
-        if (cfg->port == HW_GPIO_PORT_0) 
-        {
-            CRG_TOP->P0_SET_PAD_LATCH_REG = 1 << pin;
-        } else if (cfg->port == HW_GPIO_PORT_1) 
-        {
-            CRG_TOP->P1_SET_PAD_LATCH_REG = 1 << pin;
-        }
-    }
-
-    if (flags & GPIO_OUTPUT_INIT_HIGH)
-    {
-        gpio_da1469x_port_set_bits_raw(dev, pin);
-    }
-    else if (flags & GPIO_OUTPUT_INIT_LOW)
-    {
-        gpio_da1469x_port_clear_bits_raw(dev,pin);
-    }
+	//TODO: map flags to corresponding mode
+    hw_gpio_set_pin_function(cfg->port, pin, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
+    hw_gpio_pad_latch_enable(cfg->port, pin);
 
 	return 0;
 }
