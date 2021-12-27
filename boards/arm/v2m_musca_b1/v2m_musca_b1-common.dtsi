@@ -25,43 +25,35 @@ timer: timer@10c000 {
 	label = "TIMER_0";
 };
 
-// uart0: uart@105000 {
-// 	compatible = "arm,pl011";
-// 	reg = <0x105000 0x1000>;
-// 	interrupts = <39 3 40 3 41 3 43 3>;
-// 	interrupt-names = "rx", "tx", "rxtim", "err";
-// 	clocks = <&sysclk>;
-// 	current-speed = <115200>;
-// 	label = "UART_0";
-// };
+uart0: uart@105000 {
+	compatible = "arm,pl011";
+	reg = <0x105000 0x1000>;
+	interrupts = <39 3 40 3 41 3 43 3>;
+	interrupt-names = "rx", "tx", "rxtim", "err";
+	clocks = <&sysclk>;
+	current-speed = <115200>;
+	label = "UART_0";
+};
 
-// uart1: uart@106000 {
-// 	compatible = "arm,pl011";
-// 	reg = <0x106000 0x1000>;
-// 	interrupts = <45 3 46 3 47 3 49 3>;
-// 	interrupt-names = "rx", "tx", "rxtim", "err";
-// 	clocks = <&sysclk>;
-// 	current-speed = <115200>;
-// 	label = "UART_1";
-// };
+uart1: uart@106000 {
+	compatible = "arm,pl011";
+	reg = <0x106000 0x1000>;
+	interrupts = <45 3 46 3 47 3 49 3>;
+	interrupt-names = "rx", "tx", "rxtim", "err";
+	clocks = <&sysclk>;
+	current-speed = <115200>;
+	label = "UART_1";
+};
 
-	gpio1: gpio@50020a98 {
-		compatible = "renesas,DA1469x-gpio";
-		reg = <0x50020A98 11>;
-		gpio-controller;
-		label = "GPIO1";
-		#gpio-cells = <2>; 
-	};
-		
-// gpio: gpio@1000000 {
-// 	compatible = "arm,cmsdk-gpio";
-// 	reg = <0x1000000 0x1000>;
-// 	interrupts = <67 3		    /* combined */
-// 		      51 3 52 3 53 3 54 3   /* PINS 0:3 */
-// 		      55 3 56 3 57 3 58 3   /* PINS 4:7 */
-// 		      59 3 60 3 61 3 62 3   /* PINS 8:11 */
-// 		      63 3 64 3 65 3 66 3>; /* PINS 12:15 */
-// 	gpio-controller;
-// 	#gpio-cells = <2>;
-// 	label = "GPIO_0";
-// };
+gpio: gpio@1000000 {
+	compatible = "arm,cmsdk-gpio";
+	reg = <0x1000000 0x1000>;
+	interrupts = <67 3		    /* combined */
+		      51 3 52 3 53 3 54 3   /* PINS 0:3 */
+		      55 3 56 3 57 3 58 3   /* PINS 4:7 */
+		      59 3 60 3 61 3 62 3   /* PINS 8:11 */
+		      63 3 64 3 65 3 66 3>; /* PINS 12:15 */
+	gpio-controller;
+	#gpio-cells = <2>;
+	label = "GPIO_0";
+};

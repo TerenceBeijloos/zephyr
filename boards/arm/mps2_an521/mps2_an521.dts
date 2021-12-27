@@ -79,25 +79,15 @@
 	 * Please see tables from 3-1 to 3-4.
 	 */
 
-	// sram1: memory@10000000 {
-	// 	compatible = "mmio-sram";
-	// 	reg = <0x10000000 DT_SIZE_M(4)>;
-	// };
-
-	sram1: memory@20000000 {
+	sram1: memory@10000000 {
 		compatible = "mmio-sram";
-		reg = <0x20000000 DT_SIZE_K(512)>; //TODO: leave space AREA_OVERHEAD
+		reg = <0x10000000 DT_SIZE_M(4)>;
 	};
 
 	sram2_3: memory@38000000 {
 		compatible = "mmio-sram";
 		reg = <0x38000000 DT_SIZE_M(4)>;
 	};
-
-	// flash0: flash@0 {
-	// 	compatible = "soc-nv-flash";
-	// 	reg = <0 DT_SIZE_K(384)>; 
-	// }
 
 	psram: memory@80000000 {
 		device_type = "memory";
