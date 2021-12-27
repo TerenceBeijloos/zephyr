@@ -6,6 +6,9 @@
 #include "gpio_da1469x.h"
 #include "DA1469xAB.h"
 #include "gpio_utils.h"
+#include "sys_tcs.h"
+#include <devicetree.h>
+#include "hw_gpio.h"
 
 /* Register adresses */
 #define PX_DATA_REG_ADDR(_port)         ((volatile uint32_t *)(GPIO_BASE + offsetof(GPIO_Type, P0_DATA_REG)) + _port)
@@ -25,9 +28,8 @@ static int gpio_da1469x_init(const struct device *dev)
 {
 	ARG_UNUSED(dev);
 
-    //TODO
-	// __ASSERT(DRV_CONFIG(dev)->wui_size == NPCX_GPIO_PORT_PIN_NUM,
-	// 		"wui_maps array size must equal to its pin number");
+    hw_sys_pd_com_enable();
+
 	return 0;
 }
 
@@ -44,29 +46,26 @@ static int gpio_da1469x_port_get_raw(const struct device *dev,
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_set_bits_raw(const struct device *dev,
 					gpio_port_pins_t pin)
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    PX_SET_DATA_REG(cfg->port) = 1 << pin;
+    PX_SET_DATA_REG(cfg->port) |= pin;
 
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_clear_bits_raw(const struct device *dev,
 						gpio_port_value_t mask)
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    PX_RESET_DATA_REG(cfg->port) = 1 << mask;
+    PX_RESET_DATA_REG(cfg->port) |= mask;
     
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_toggle_bits(const struct device *dev,
 						uint32_t pins)
 {
@@ -90,7 +89,6 @@ static int gpio_da1469x_config(const struct device *dev,
 {
     struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    //TODO: look at design patterns to prevent big if else structure
     if (flags & GPIO_OUTPUT)
     {
         PXX_MODE_REG(cfg->port, pin) = HW_GPIO_MODE_OUTPUT | HW_GPIO_FUNC_GPIO;
@@ -160,6 +158,7 @@ static const struct gpio_driver_api gpio_da1469x_driver = {
 			.port_pin_mask =                                       \
 			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
 		},                                                             \
+		.port = DT_INST_PROP(inst, port) 							\
 	};                                                                     \
 									       \
 	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
