@@ -8,6 +8,7 @@
 #include "gpio_utils.h"
 #include "sys_tcs.h"
 #include <devicetree.h>
+#include "hw_gpio.h"
 
 /* Register adresses */
 #define PX_DATA_REG_ADDR(_port)         ((volatile uint32_t *)(GPIO_BASE + offsetof(GPIO_Type, P0_DATA_REG)) + _port)
