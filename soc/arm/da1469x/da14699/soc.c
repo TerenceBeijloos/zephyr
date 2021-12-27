@@ -13,7 +13,8 @@ static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
 
     NMI_INIT();
     SystemInitPre();
-
+    hw_watchdog_freeze();
+    
     return 0;
 }
 
