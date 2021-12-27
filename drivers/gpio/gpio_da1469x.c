@@ -27,14 +27,7 @@ static int gpio_da1469x_init(const struct device *dev)
 {
 	ARG_UNUSED(dev);
 
-    //TODO
-	// __ASSERT(DRV_CONFIG(dev)->wui_size == NPCX_GPIO_PORT_PIN_NUM,
-	// 		"wui_maps array size must equal to its pin number");
-
-	hw_sys_pd_com_enable();
-    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_COMM);
-    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_SYS);
-    sys_tcs_apply_reg_pairs(SYS_TCS_GROUP_PD_TMR);
+    hw_sys_pd_com_enable();
 
 	return 0;
 }
@@ -52,29 +45,26 @@ static int gpio_da1469x_port_get_raw(const struct device *dev,
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_set_bits_raw(const struct device *dev,
 					gpio_port_pins_t pin)
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-	hw_gpio_set_active(cfg->port, pin);
+    PX_SET_DATA_REG(cfg->port) |= pin;
 
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_clear_bits_raw(const struct device *dev,
 						gpio_port_value_t mask)
 {
 	struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-    hw_gpio_set_inactive(cfg->port, mask);
-
+    PX_RESET_DATA_REG(cfg->port) |= mask;
+    
 	return 0;
 }
 
-//TODO: add support setting multiple pins at the same time
 static int gpio_da1469x_port_toggle_bits(const struct device *dev,
 						uint32_t pins)
 {
@@ -98,11 +88,27 @@ static int gpio_da1469x_config(const struct device *dev,
 {
     struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
-	//The pin 
+    if (flags & GPIO_OUTPUT)
+    {
+        PXX_MODE_REG(cfg->port, pin) = HW_GPIO_MODE_OUTPUT | HW_GPIO_FUNC_GPIO;
 
-	//TODO: map flags to corresponding mode
-    hw_gpio_set_pin_function(cfg->port, pin+1, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
-    hw_gpio_pad_latch_enable(cfg->port, pin+1);
+        if (cfg->port == HW_GPIO_PORT_0) 
+        {
+            CRG_TOP->P0_SET_PAD_LATCH_REG = 1 << pin;
+        } else if (cfg->port == HW_GPIO_PORT_1) 
+        {
+            CRG_TOP->P1_SET_PAD_LATCH_REG = 1 << pin;
+        }
+    }
+
+    if (flags & GPIO_OUTPUT_INIT_HIGH)
+    {
+        gpio_da1469x_port_set_bits_raw(dev, pin);
+    }
+    else if (flags & GPIO_OUTPUT_INIT_LOW)
+    {
+        gpio_da1469x_port_clear_bits_raw(dev,pin);
+    }
 
 	return 0;
 }
