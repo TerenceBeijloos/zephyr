@@ -32,28 +32,6 @@
 		flash0: flash@0 {
 			compatible = "soc-nv-flash";
 			reg = <0 DT_SIZE_K(384)>; 
-
-			// partitions {
-            //     compatible = "fixed-partitions";
-            //     #address-cells = <1>;
-            //     #size-cells = <1>;
-
-            //     // code_partition: partition@0 {
-            //     //         label = "code";
-            //     //         reg = <0x0 0xF0000>;
-            //     //         read-only;
-            //     // };
-
-            //     // /*
-            //     // * The final 64 KiB is reserved for the application.
-            //     // * Storage partition will be used by FCB/LittleFS/NVS
-            //     // * if enabled.
-            //     // */
-            //     // storage_partition: partition@F0000 {
-            //     //         label = "storage";
-            //     //         reg = <0x000F0000 0x00100000>;
-            //     // };
-        	// };
 		};
 
 		gpio1: gpio@50020a98 {
