@@ -87,7 +87,6 @@
 struct gpio_da1469x_config {
 	/* gpio_driver_config needs to be first */
 	struct gpio_driver_config common;
-	uint32_t* base;
     uint8_t port;
 };
 

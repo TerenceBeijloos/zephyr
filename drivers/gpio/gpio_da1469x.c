@@ -7,7 +7,7 @@
 #include "DA1469xAB.h"
 #include "gpio_utils.h"
 #include "sys_tcs.h"
-
+#include <devicetree.h>
 
 /* Register adresses */
 #define PX_DATA_REG_ADDR(_port)         ((volatile uint32_t *)(GPIO_BASE + offsetof(GPIO_Type, P0_DATA_REG)) + _port)
@@ -98,9 +98,11 @@ static int gpio_da1469x_config(const struct device *dev,
 {
     struct gpio_da1469x_config *const cfg = DEV_CFG(dev);
 
+	//The pin 
+
 	//TODO: map flags to corresponding mode
-    hw_gpio_set_pin_function(cfg->port, pin, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
-    hw_gpio_pad_latch_enable(cfg->port, pin);
+    hw_gpio_set_pin_function(cfg->port, pin+1, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_GPIO);
+    hw_gpio_pad_latch_enable(cfg->port, pin+1);
 
 	return 0;
 }
@@ -149,6 +151,7 @@ static const struct gpio_driver_api gpio_da1469x_driver = {
 			.port_pin_mask =                                       \
 			GPIO_PORT_PIN_MASK_FROM_NGPIOS(inst),\
 		},                                                             \
+		.port = DT_INST_PROP(inst, port) 							\
 	};                                                                     \
 									       \
 	static struct gpio_da1469x_data gpio_da1469x_data_##inst;	               \
