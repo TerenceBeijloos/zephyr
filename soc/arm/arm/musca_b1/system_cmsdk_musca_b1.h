@@ -11,7 +11,6 @@
 #ifndef SYSTEM_CMSDK_MUSCA_B1_H
 #define SYSTEM_CMSDK_MUSCA_B1_H
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
