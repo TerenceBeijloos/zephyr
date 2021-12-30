@@ -1,0 +1,1 @@
+zephyr_sources(hal_da1469x_uart.c)

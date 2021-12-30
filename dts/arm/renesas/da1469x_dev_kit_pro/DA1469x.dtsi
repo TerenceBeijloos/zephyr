@@ -24,7 +24,7 @@
 
 	sram0: memory@20000000 {
 		compatible = "mmio-sram";
-		reg = <(0x20000000 + 0x200) (DT_SIZE_K(512) - 0x200)>; //TODO: leave space AREA_OVERHEAD
+		reg = <(0x20000000 + 0x200) (DT_SIZE_K(512) - 0x200)>; 
 	};
 
 	
@@ -41,6 +41,13 @@
 			label = "GPIO1";
 			#gpio-cells = <2>; 
 			port = <1>;
+		};
+
+		uart0: serial@50020000 {
+			compatible = "renesas,DA1469x-uart";
+			reg = <0x50020000 0x100>;
+			label = "UART_0";
+			status = "disabled";
 		};
 	};
 };

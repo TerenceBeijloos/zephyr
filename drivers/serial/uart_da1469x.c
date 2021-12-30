@@ -1,4 +1,5 @@
 #include <drivers/uart.h>
+#include "hal_da1469x_uart.h"
 
 #define DT_DRV_COMPAT	renesas_da1469x_uart
 
@@ -9,17 +10,24 @@ struct uart_da1469x_config
 
 struct uart_da1469x_data
 {
-    struct uart_device_config uart_config;
+    struct uart_config uart_current_config;
 };
 
 #define DEV_CFG(_dev) ((struct uart_da1469x_config *const)(_dev)->config)
 
+#define DEV_DATA(_dev) ((struct uart_da1469x_data *const)(_dev)->data)
+
+
+static int uart_da1469x_configure(const struct device *dev, struct uart_config *cfg)
+{
+    return 0;
+}
 
 static void uart_da1469x_poll_out(const struct device *dev,
 					       unsigned char c)
 {
 	struct uart_da1469x_config *const cfg = DEV_CFG(dev);
-
+    
 }
 
 static int uart_da1469x_init(const struct device *dev)

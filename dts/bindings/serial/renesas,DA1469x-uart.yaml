@@ -1,0 +1,9 @@
+description: Renesas DA1469x uart
+
+compatible: "renesas,DA1469x-uart"
+
+include: uart-controller.yaml
+
+properties:
+    reg:
+      required: true
