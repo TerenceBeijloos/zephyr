@@ -7,3 +7,24 @@ include: uart-controller.yaml
 properties:
     reg:
       required: true
+
+    rx_pin:
+      type: int
+      required: true
+
+    tx_pin:
+      type: int
+      required: true
+
+    gpio:
+      type: phandle
+      required: true
+
+    uart_id:
+      type: int
+      required: true
+      enum:
+        - 1
+        - 2
+        - 3
+

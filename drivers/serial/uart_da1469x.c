@@ -6,6 +6,7 @@
 struct uart_da1469x_config
 {
     struct uart_device_config uart_config;
+	uart_id id;
 };
 
 struct uart_da1469x_data
@@ -20,6 +21,16 @@ struct uart_da1469x_data
 
 static int uart_da1469x_configure(const struct device *dev, struct uart_config *cfg)
 {
+	uart_config_abstraction config = 
+	{
+		.baudrate 	= cfg->baudrate;
+		.parity 	= cfg->parity;
+		.stop_bits 	= cfg->stop_bits;
+		.data_bits 	= cfg->data_bits;
+		.flow_ctrl 	= cfg->flow_ctrl;
+	};
+
+	hal_uart_da1469x_configure(&config, DEV_CFG(dev)->id);
     return 0;
 }
 
@@ -34,6 +45,8 @@ static int uart_da1469x_init(const struct device *dev)
 {
     ARG_UNUSED(dev);
 
+	uart_da1469x_configure(dev, &DEV_DATA(dev)->uart_config);
+
 	return 0;
 }
 
@@ -47,6 +60,7 @@ static const struct uart_driver_api uart_da1469x_driver = {
 #define DA1469X_UART_DEVICE_INIT(inst)                                      \
 	static const struct uart_da1469x_config uart_da1469x_cfg_##inst = {     \
             .uart_config = (uint8_t *)DT_INST_REG_ADDR(index),              \
+			.id = DT_INST_PROP(inst, uart_id)								\
 	};                                                                      \
 									                                        \
     static struct uart_da1469x_data uart_da1469x_data_##inst;	            \
@@ -61,5 +75,4 @@ static const struct uart_driver_api uart_da1469x_driver = {
 			    &uart_da1469x_driver);
 
 DT_INST_FOREACH_STATUS_OKAY(DA1469X_GPIO_DEVICE_INIT);
-
 
