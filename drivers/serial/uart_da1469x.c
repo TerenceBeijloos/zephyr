@@ -21,35 +21,34 @@ struct uart_da1469x_data
 
 static int uart_da1469x_configure(const struct device *dev, struct uart_config *cfg)
 {
-	uart_config_abstraction config = 
-	{
-		.baudrate 	= cfg->baudrate;
-		.parity 	= cfg->parity;
-		.stop_bits 	= cfg->stop_bits;
-		.data_bits 	= cfg->data_bits;
-		.flow_ctrl 	= cfg->flow_ctrl;
+	uart_config_abstraction config = {
+		.baudrate 	= cfg->baudrate,
+		.parity 	= cfg->parity,
+		.stop_bits 	= cfg->stop_bits,
+		.data_bits 	= cfg->data_bits,
+		.flow_ctrl 	= cfg->flow_ctrl
 	};
 
 	hal_uart_da1469x_configure(&config, DEV_CFG(dev)->id);
+
     return 0;
 }
 
 static void uart_da1469x_poll_out(const struct device *dev,
 					       unsigned char c)
 {
-	struct uart_da1469x_config *const cfg = DEV_CFG(dev);
-    
+    hal_uart_da1469x_poll_out(c, DEV_CFG(dev)->id);
 }
 
 static int uart_da1469x_init(const struct device *dev)
 {
     ARG_UNUSED(dev);
 
-	uart_da1469x_configure(dev, &DEV_DATA(dev)->uart_config);
+	uart_da1469x_configure(dev, &(DEV_CFG(dev)->uart_config));
+
 
 	return 0;
 }
-
 
 static const struct uart_driver_api uart_da1469x_driver = {
 	.poll_in = NULL,

@@ -5,5 +5,11 @@ if BOARD_DA1469X_DEV_KIT_PRO
 config BOARD
    default "da1469x_dev_kit_pro"
 
+if SERIAL
+
+config UART_DA1469X
+	default y
+
+endif # SERIAL
 
 endif # BOARD_DA1469X_DEV_KIT_PRO

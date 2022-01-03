@@ -18,12 +18,12 @@ static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
     hw_watchdog_freeze();
     hw_sys_pd_com_enable();
     
-    hw_gpio_set_pin_function(HW_GPIO_PORT_0, HW_GPIO_PIN_8, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_UART_RX);
+	hw_gpio_set_pin_function(HW_GPIO_PORT_0, HW_GPIO_PIN_8, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_UART_RX);
     hw_gpio_pad_latch_enable(HW_GPIO_PORT_0, HW_GPIO_PIN_8);
 
     hw_gpio_set_pin_function(HW_GPIO_PORT_0, HW_GPIO_PIN_9, HW_GPIO_MODE_OUTPUT, HW_GPIO_FUNC_UART_TX);
     hw_gpio_pad_latch_enable(HW_GPIO_PORT_0, HW_GPIO_PIN_9);
-
+    
     uart_config_abstraction config = 
     {
         .baudrate = 115200,
@@ -33,8 +33,8 @@ static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
 	    .flow_ctrl = 0
     };
 
-    hal_uart_da1469x_configure(&config, 0);
-    hal_uart_da1469x_poll_out('H', 0);
+    // hal_uart_da1469x_configure(&config, 0);
+    // hal_uart_da1469x_poll_out('H', 0);
 
     return 0;
 }

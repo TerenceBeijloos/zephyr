@@ -52,11 +52,10 @@
 			port = <1>;
 		};
 
-		uart1: serial@50020000 {
+		uart1: uart@50020000 {
 			compatible = "renesas,DA1469x-uart";
 			reg = <0x50020000 0x100>;
 			label = "UART_1";
-			status = "disabled";
 			rx_pin = <8>;
 			tx_pin = <9>;
 			gpio = <&gpio0>;
