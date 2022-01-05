@@ -60,9 +60,11 @@
 			tx_pin = <9>;
 			gpio = <&gpio0>;
 			current-speed = <115200>;
-			/delete-property/ hw-flow-control;
 			parity = "none";
 			uart_id = <1>;
+			stop_bits = <1>;
+			data_bits = <8>;
+			/delete-property/ hw-flow-control;
 		};
 	};
 };
