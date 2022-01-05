@@ -12,11 +12,15 @@ properties:
       type: int
       required: true
 
+    rx_port:
+      type: phandle
+      required: true
+
     tx_pin:
       type: int
       required: true
 
-    gpio:
+    tx_port:
       type: phandle
       required: true
 

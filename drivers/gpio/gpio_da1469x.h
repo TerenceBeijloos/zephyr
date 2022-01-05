@@ -15,4 +15,6 @@ struct gpio_da1469x_data {
 	/* device's owner of this data */
 	const struct device *dev;
 };
+
+
 #endif /* ZEPHYR_DRIVERS_GPIO_GPIO_DA1469X_H_ */

@@ -38,7 +38,7 @@
 			compatible = "renesas,DA1469x-gpio";
 			reg = <0x50020A18 0x80>;
 			gpio-controller;
-			label = "GPIO0";
+			label = "gpio0";
 			#gpio-cells = <2>; 
 			port = <0>;
 		};
@@ -47,7 +47,7 @@
 			compatible = "renesas,DA1469x-gpio";
 			reg = <0x50020a98 0x5c>;
 			gpio-controller;
-			label = "GPIO1";
+			label = "gpio1";
 			#gpio-cells = <2>; 
 			port = <1>;
 		};
@@ -56,9 +56,12 @@
 			compatible = "renesas,DA1469x-uart";
 			reg = <0x50020000 0x100>;
 			label = "UART_1";
+
 			rx_pin = <8>;
+			rx_port = <&gpio0>;
 			tx_pin = <9>;
-			gpio = <&gpio0>;
+			tx_port = <&gpio0>;
+
 			current-speed = <115200>;
 			parity = "none";
 			uart_id = <1>;
