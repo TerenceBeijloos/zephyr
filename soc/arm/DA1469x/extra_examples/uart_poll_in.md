@@ -1,5 +1,6 @@
+See [Application Development](https://docs.zephyrproject.org/latest/application/index.html) to learn how to create a project.
 
-
+```c
 #include zephyr.h
 #include sysprintk.h
 
@@ -25,3 +26,4 @@ void main(void)
 		}
 	}
 }
+```
