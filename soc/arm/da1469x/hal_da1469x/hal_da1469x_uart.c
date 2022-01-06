@@ -154,3 +154,9 @@ int hal_uart_da1469x_poll_out(unsigned char byte, uart_id id)
 {
     hw_uart_write(convert_uart_id(id), byte);
 }
+
+int hal_uart_da1469x_poll_in(unsigned char* byte, uart_id id)
+{
+	*byte = hw_uart_read(convert_uart_id(id));
+	return 0;
+}

@@ -91,7 +91,8 @@ static int gpio_da1469x_config(const struct device *dev,
 
     if (flags & GPIO_OUTPUT)
     {
-        PXX_MODE_REG(cfg->port, pin) = HW_GPIO_MODE_OUTPUT | (flags & 0xFF);
+		//(flags & 0x3F) is used to set the function (HW_GPIO_FUNC) of the pin. 
+        PXX_MODE_REG(cfg->port, pin) = HW_GPIO_MODE_OUTPUT | (flags & 0x3F);
 
         if (cfg->port == HW_GPIO_PORT_0) 
         {

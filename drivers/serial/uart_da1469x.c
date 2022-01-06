@@ -55,6 +55,12 @@ static void uart_da1469x_poll_out(const struct device *dev,
     hal_uart_da1469x_poll_out(c, DEV_CFG(dev)->id);
 }
 
+static int uart_da1469x_poll_in(const struct device *dev, unsigned char* byte)
+{
+	hal_uart_da1469x_poll_in(byte, DEV_CFG(dev)->id);
+	return 0;
+}
+
 static int uart_da1469x_init(const struct device *dev)
 {
     ARG_UNUSED(dev);
@@ -65,7 +71,7 @@ static int uart_da1469x_init(const struct device *dev)
 }
 
 static const struct uart_driver_api uart_da1469x_driver = {
-	.poll_in = NULL,
+	.poll_in = &uart_da1469x_poll_in,
 	.poll_out = &uart_da1469x_poll_out,
 	.err_check = NULL,
 };
