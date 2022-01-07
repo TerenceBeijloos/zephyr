@@ -34,9 +34,9 @@
 			reg = <0 DT_SIZE_K(384)>; 
 		};
 
-		gpio0: gpio@50020A18 {
+		gpio0: gpio@50020a18 {
 			compatible = "renesas,DA1469x-gpio";
-			reg = <0x50020A18 0x80>;
+			reg = <0x50020a18 0x80>;
 			gpio-controller;
 			label = "gpio0";
 			#gpio-cells = <2>; 
