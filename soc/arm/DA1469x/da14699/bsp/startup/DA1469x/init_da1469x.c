@@ -66,30 +66,30 @@ __RETAINED_RW uint32_t SystemLPClock = dg_configXTAL32K_FREQ;   /*!< System Low 
  * @brief  Memory safe implementation of newlib's _sbrk().
  *
  */
-__LTO_EXT
-void *_sbrk(int incr)
-{
-        uint8_t *newheapstart;
+// __LTO_EXT
+// void *_sbrk(int incr)
+// {
+//         uint8_t *newheapstart;
 
-        if (heapend + incr > &__HeapLimit) {
-                /* Hitting this, means that the value of _HEAP_SIZE is too small.
-                 * The value of incr is in stored_incr at this point. By checking the equation
-                 * above, it is straightforward to determine the missing space.
-                 */
-                volatile int stored_incr __UNUSED;
+//         if (heapend + incr > &__HeapLimit) {
+//                 /* Hitting this, means that the value of _HEAP_SIZE is too small.
+//                  * The value of incr is in stored_incr at this point. By checking the equation
+//                  * above, it is straightforward to determine the missing space.
+//                  */
+//                 volatile int stored_incr __UNUSED;
 
-                stored_incr = incr;
-                ASSERT_ERROR(0);
+//                 stored_incr = incr;
+//                 ASSERT_ERROR(0);
 
-                errno = ENOMEM;
-                return (void *)-1;
-        }
+//                 errno = ENOMEM;
+//                 return (void *)-1;
+//         }
 
-        newheapstart = heapend;
-        heapend += incr;
+//         newheapstart = heapend;
+//         heapend += incr;
 
-        return newheapstart;
-}
+//         return newheapstart;
+// }
 
 /**
 * \brief  SDK implementation of stdlib's rand().

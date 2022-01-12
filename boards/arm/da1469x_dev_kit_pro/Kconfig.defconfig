@@ -9,6 +9,7 @@ if SERIAL
 
 config UART_DA1469X
 	default y
+   select SERIAL_SUPPORT_INTERRUPT
 
 endif # SERIAL
 
