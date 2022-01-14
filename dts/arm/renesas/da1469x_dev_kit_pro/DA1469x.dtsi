@@ -1,0 +1,77 @@
+#include <dt-bindings/gpio/gpio.h>
+#include <mem.h>
+#include <arm/armv8-m.dtsi>
+
+/ {
+
+	cpus: cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,cortex-m33f";
+			reg = <0>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+		};
+
+		mpu: mpu@e000ed90 {
+			compatible = "arm,armv8m-mpu";
+			reg = <0xe000ed90 0x40>;
+			arm,num-mpu-regions = <8>;
+		};
+	};
+
+	sram0: memory@20000200 {
+		compatible = "mmio-sram";
+		reg = <(0x20000000 + 0x200) (DT_SIZE_K(512) - 0x200)>; 
+	};
+
+
+	soc {
+		flash0: flash@0 {
+			compatible = "soc-nv-flash";
+			reg = <0 DT_SIZE_K(384)>; 
+		};
+
+		gpio0: gpio@50020a18 {
+			compatible = "renesas,DA1469x-gpio";
+			reg = <0x50020a18 0x80>;
+			gpio-controller;
+			label = "gpio0";
+			#gpio-cells = <2>; 
+			port = <0>;
+		};
+
+		gpio1: gpio@50020a98 {
+			compatible = "renesas,DA1469x-gpio";
+			reg = <0x50020a98 0x5c>;
+			gpio-controller;
+			label = "gpio1";
+			#gpio-cells = <2>; 
+			port = <1>;
+		};
+
+		uart1: uart@50020000 {
+			compatible = "renesas,DA1469x-uart";
+			reg = <0x50020000 0x100>;
+			label = "UART_1";
+
+			rx_pin = <8>;
+			rx_port = <&gpio0>;
+			tx_pin = <9>;
+			tx_port = <&gpio0>;
+
+			current-speed = <115200>;
+			parity = "none";
+			uart_id = <1>;
+			stop_bits = <1>;
+			data_bits = <8>;
+			/delete-property/ hw-flow-control;
+		};
+	};
+};
+
+&nvic {
+	arm,num-irq-priority-bits = <4>;
+};

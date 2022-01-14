@@ -1,0 +1,5 @@
+config UART_DA1469X
+	bool "ARM DA1469x UART driver"
+	select SERIAL_HAS_DRIVER
+	help
+	  This option enables the UART driver for ARM DA1469x.

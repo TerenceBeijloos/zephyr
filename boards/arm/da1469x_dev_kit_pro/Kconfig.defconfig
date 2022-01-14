@@ -1,0 +1,16 @@
+if BOARD_DA1469X_DEV_KIT_PRO
+
+# Always set CONFIG_BOARD here. This isn't meant to be customized,
+# but is set as a "default" due to Kconfig language restrictions.
+config BOARD
+   default "da1469x_dev_kit_pro"
+
+if SERIAL
+
+config UART_DA1469X
+	default y
+   select SERIAL_SUPPORT_INTERRUPT
+
+endif # SERIAL
+
+endif # BOARD_DA1469X_DEV_KIT_PRO

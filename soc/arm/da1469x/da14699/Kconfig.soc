@@ -1,0 +1,22 @@
+choice
+	prompt "DA1469x dual core ble device Selection"
+	depends on SOC_SERIES_DA1469X
+
+config SOC_DA14699
+	bool "SOC_DA14699"
+
+endchoice
+
+if SOC_SERIES_DA1469X
+
+config SOC_PART_NUMBER_DA14699
+	bool
+
+config GPIO_DA1469X
+	default y
+	
+# config UART_DA1469X
+# 	 default y
+# 	 select GPIO_DA1469X
+
+endif # SOC_SERIES_DA1469X

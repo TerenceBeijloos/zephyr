@@ -1,0 +1,45 @@
+/*
+ * Copyright (c) 2018-2019 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+
+
+#include "skeleton.dtsi"
+#include <Renesas/da1469x_dev_kit_pro/DA1469x.dtsi>   
+
+/ {   
+	model = "DA1469x series development kit pro";	
+	compatible = "renesas,da1469x_dev_kit_pro";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		led0 = &red_led;
+	};
+
+	chosen {
+		zephyr,console = &uart1;
+		zephyr,shell-uart = &uart1;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		red_led: led_0 {
+			gpios = <&gpio1 1 GPIO_ACTIVE_HIGH>;
+			label = "User red led0";
+		};
+	};
+
+	sysclk: system-clock {
+		compatible = "fixed-clock";
+		clock-frequency = <32000000>;
+		#clock-cells = <0>;
+	};
+};
+
