@@ -840,9 +840,6 @@ void senis_del_ms(b_ctx_t* b_ctx, uint32_t delay_ms)
 #if (dg_configUSE_LP_CLK == LP_CLK_32768 || dg_configUSE_LP_CLK == LP_CLK_32000)
         ASSERT_WARNING(delay_ms <= ((uint64_t)0xFFFFFFFF * 1000) / dg_configXTAL32K_FREQ);
         senis_del_lp_clk(b_ctx, (delay_ms * dg_configXTAL32K_FREQ) / 1000);
-#elif (dg_configUSE_LP_CLK == LP_CLK_RCX && defined(OS_FREERTOS))
-        ASSERT_WARNING(delay_ms <= ((uint64_t)0xFFFFFFFF * 1000) / rcx_clock_hz);
-        senis_del_lp_clk(b_ctx, (delay_ms * rcx_clock_hz) / 1000);
 #else
         ASSERT_ERROR(0);
 #endif

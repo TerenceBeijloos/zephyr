@@ -3,12 +3,8 @@
 if(CONFIG_SOC_SERIES_DA1469X)
   zephyr_library()
   zephyr_library_sources(soc.c)
-  # zephyr_library_sources(da1469x_m33_sleep.S)
-  # zephyr_library_sources(gcc_startup_da1469x.S)
 endif()
 
 
 add_subdirectory(bsp)
 add_subdirectory(middleware)
-
-# zephyr_sources(soc.c)

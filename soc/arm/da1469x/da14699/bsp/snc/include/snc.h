@@ -25,8 +25,6 @@
 
 #if dg_configUSE_HW_SENSOR_NODE
 
-#include "osal.h"
-
 /*
  * ENUMERATION, DATA TYPE AND STRUCTURE DEFINITIONS
  *****************************************************************************************

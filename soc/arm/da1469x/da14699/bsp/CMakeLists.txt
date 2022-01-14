@@ -17,7 +17,7 @@ add_subdirectory(system/sys_man)
 add_subdirectory(system/sys_man/include)
 zephyr_include_directories(system/sys_man/include)
 
-add_subdirectory(startup/DA1469x)
+# add_subdirectory(startup/DA1469x)
 
 add_subdirectory(snc/include)
 zephyr_include_directories(snc/include)

@@ -1,10 +1,9 @@
-#include "DA1469x_helper_defines.h"
 #include "soc.h"
 #include <init.h>
 #include "system_DA1469x.h"
 #include "hw_gpio.h"
 #include "hw_watchdog.h"
-#include "sys_tcs.h"
+// #include "sys_tcs.h"
 
 
 static int da1469x_system_init_pre_kernel_wrapper(const struct device *dev)
