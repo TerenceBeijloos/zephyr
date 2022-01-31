@@ -22,45 +22,41 @@
 		};
 	};
 
-	sram0: memory@20000200 {
-		compatible = "mmio-sram";
-		reg = <(0x20000000 + 0x200) (DT_SIZE_K(512) - 0x200)>; 
-	};
-
 
 	soc {
-		flash0: flash@0 {
-			compatible = "soc-nv-flash";
-			reg = <0 DT_SIZE_K(384)>; 
-		};
 
-		gpio0: gpio@50020a18 {
+		sram0: memory@20000200 {
+			compatible = "mmio-sram";
+			reg = <(0x20000000 + 0x200) (DT_SIZE_K(512) - 0x200)>; 
+		};
+		
+		GPIO_0: gpio@50020a18 {
 			compatible = "renesas,DA1469x-gpio";
 			reg = <0x50020a18 0x80>;
 			gpio-controller;
-			label = "gpio0";
+			label = "GPIO_0";
 			#gpio-cells = <2>; 
 			port = <0>;
 		};
 
-		gpio1: gpio@50020a98 {
+		GPIO_1: gpio@50020a98 {
 			compatible = "renesas,DA1469x-gpio";
 			reg = <0x50020a98 0x5c>;
 			gpio-controller;
-			label = "gpio1";
+			label = "GPIO_1";
 			#gpio-cells = <2>; 
 			port = <1>;
 		};
 
-		uart1: uart@50020000 {
+		UART_1: uart@50020000 {
 			compatible = "renesas,DA1469x-uart";
 			reg = <0x50020000 0x100>;
 			label = "UART_1";
 
 			rx_pin = <8>;
-			rx_port = <&gpio0>;
+			rx_port = <&GPIO_0>;
 			tx_pin = <9>;
-			tx_port = <&gpio0>;
+			tx_port = <&GPIO_0>;
 
 			current-speed = <115200>;
 			parity = "none";

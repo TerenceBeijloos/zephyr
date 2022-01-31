@@ -9,7 +9,7 @@
 
 
 #include "skeleton.dtsi"
-#include <Renesas/da1469x_dev_kit_pro/DA1469x.dtsi>   
+#include <renesas/da1469x_dev_kit_pro/DA1469x.dtsi>   
 
 / {   
 	model = "DA1469x series development kit pro";	
@@ -17,21 +17,69 @@
 	#address-cells = <1>;
 	#size-cells = <1>;
 
+flashcontroller0: flash-controller@420 {
+		compatible = "zephyr,sim-flash";
+		reg = <0x00000000 DT_SIZE_K(2048)>;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		erase-value = <0xff>;
+
+		label = "flash_ctrl";
+
+		flash0: flash@0 {
+			status = "okay";
+			compatible = "soc-nv-flash";
+			label = "flash";
+			erase-block-size = <4096>;
+			write-block-size = <1>;
+			reg = <0x00000000 DT_SIZE_K(2048)>;
+
+			partitions {
+				compatible = "fixed-partitions";
+				#address-cells = <1>;
+				#size-cells = <1>;
+
+				boot_partition: partition@0 {
+					label = "mcuboot";
+					reg = <0x000000000 0x0000C000>;
+				};
+				slot0_partition: partition@c000 {
+					label = "image-0";
+					reg = <0x0000C000 0x000069000>;
+				};
+				slot1_partition: partition@75000 {
+					label = "image-1";
+					reg = <0x00075000 0x000069000>;
+				};
+				scratch_partition: partition@de000 {
+					label = "image-scratch";
+					reg = <0x000de000 0x0001e000>;
+				};
+				storage_partition: partition@fc000 {
+					label = "storage";
+					reg = <0x000fc000 0x00004000>;
+				};
+			};
+		};
+	};
+
 	aliases {
 		led0 = &red_led;
 	};
 
 	chosen {
-		zephyr,console = &uart1;
-		zephyr,shell-uart = &uart1;
+		zephyr,console = &UART_1;
+		zephyr,shell-uart = &UART_1;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
 	};
 
 	leds {
 		compatible = "gpio-leds";
 		red_led: led_0 {
-			gpios = <&gpio1 1 GPIO_ACTIVE_HIGH>;
+			gpios = <&GPIO_1 1 GPIO_ACTIVE_HIGH>;
 			label = "User red led0";
 		};
 	};
@@ -41,5 +89,57 @@
 		clock-frequency = <32000000>;
 		#clock-cells = <0>;
 	};
+
+	// &flash0 {
+	// 	/*
+	// 	* For more information, see:
+	// 	* https://docs.zephyrproject.org/latest/reference/devicetree/index.html#fixed-flash-partitions
+	// 	*/
+	// 	partitions {
+	// 		compatible = "fixed-partitions";
+	// 		#address-cells = <1>;
+	// 		#size-cells = <1>;
+
+	// 		boot_partition: partition@0 {
+	// 			label = "mcuboot";
+	// 			reg = <0x000000000 0x00014000>;
+	// 		};
+	// 		slot0_partition: partition@14000 {
+	// 			label = "image-0";
+	// 			reg = <0x000014000 0x0006e000>;
+	// 		};
+	// 		slot1_partition: partition@82000 {
+	// 			label = "image-1";
+	// 			reg = <0x000082000 0x0006e000>;
+	// 		};
+	// 		scratch_partition: partition@f0000 {
+	// 			label = "image-scratch";
+	// 			reg = <0x0000f0000 0x00008000>;
+	// 		};
+	// 		storage_partition: partition@f8000 {
+	// 			label = "storage";
+	// 			reg = <0x0000f8000 0x00008000>;
+	// 		};
+	// 	};
+	// };
+
+	// TODO mcuboot
+	// &flash0{
+	// 	partitions {
+	// 		compatible = "fixed-partitions";
+	// 		#address-cells = <1>;
+	// 		#size-cells = <1>;
+
+	// 		slot0_partition: partition@0 {
+	// 			label = "image-0";
+	// 			reg = <0x000000000 DT_SIZE_M(1)>;
+	// 		};
+
+	// 		// storage_partition: partition@f8000 {
+	// 		// 	label = "storage";
+	// 		// 	reg = <0x0000f8000 0x00008000>;
+	// 		// };
+	// 	};
+	// };
 };
 

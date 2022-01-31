@@ -27,8 +27,6 @@
 #include "sdk_defs.h"
 #include "hw_pd.h"
 
-#include <hw_memctrl.h>
-
 /* \brief Specifies the HW BSR mask used for accessing the SW BSR */
 #define SW_BSR_HW_BSR_MASK     (0x3)
 

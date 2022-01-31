@@ -191,13 +191,13 @@
 /**
  * \brief Zero-initialized data retained memory attribute
  */
-#define __RETAINED                      __attribute__((section("retention_mem_zi")))    // RetRAM0
+#define __RETAINED                      //Not supported (yet) __attribute__((section("retention_mem_zi")))    // RetRAM0
 #define __RETAINED_1                    __attribute__((section("retention_mem_1_zi")))  // RetRAM1
 
 /**
  * \brief Initialized data retained memory attribute
  */
-#define __RETAINED_RW                   __attribute__((section("retention_mem_init")))
+#define __RETAINED_RW                   //Not supported (yet) __attribute__((section("retention_mem_init")))
 
 /**
  * \brief Uninitialized data retained memory attribute. Used for variables that should
@@ -214,7 +214,7 @@
  * \brief Text retained memory attribute
  */
 #if ((dg_configCODE_LOCATION == NON_VOLATILE_IS_FLASH) && (dg_configEXEC_MODE == MODE_IS_CACHED))
-#define __RETAINED_CODE                 __attribute__((section("text_retained"))) __attribute__((noinline)) __attribute__((optimize ("no-tree-switch-conversion")))
+#define __RETAINED_CODE                 //Not supported (yet) __attribute__((section("text_retained"))) __attribute__((noinline)) __attribute__((optimize ("no-tree-switch-conversion")))
 #else
 #define __RETAINED_CODE
 #endif

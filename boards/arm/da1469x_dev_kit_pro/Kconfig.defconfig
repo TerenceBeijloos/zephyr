@@ -5,6 +5,13 @@ if BOARD_DA1469X_DEV_KIT_PRO
 config BOARD
    default "da1469x_dev_kit_pro"
 
+if FLASH
+
+config SOC_FLASH_DA1469X
+	default y
+
+endif
+
 if SERIAL
 
 config UART_DA1469X
@@ -12,5 +19,27 @@ config UART_DA1469X
    select SERIAL_SUPPORT_INTERRUPT
 
 endif # SERIAL
+
+if DISK_DRIVER_FLASH
+
+config DISK_FLASH_DEV_NAME
+	default "flash"
+
+config DISK_FLASH_START
+	default 0xf8000
+
+config DISK_FLASH_MAX_RW_SIZE
+	default 4
+
+config DISK_ERASE_BLOCK_SIZE
+	default 0x1000
+
+config DISK_FLASH_ERASE_ALIGNMENT
+	default 0x1000
+
+config DISK_VOLUME_SIZE
+	default 0x8000
+
+endif # DISK_DRIVER_FLASH
 
 endif # BOARD_DA1469X_DEV_KIT_PRO

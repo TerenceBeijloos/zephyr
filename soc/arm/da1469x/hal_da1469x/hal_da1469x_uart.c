@@ -153,6 +153,7 @@ int hal_uart_da1469x_configure(const uart_config_abstraction* config, uart_id id
 int hal_uart_da1469x_poll_out(unsigned char byte, uart_id id)
 {
     hw_uart_write(convert_uart_id(id), byte);
+    return 0;
 }
 
 int hal_uart_da1469x_poll_in(unsigned char* byte, uart_id id)

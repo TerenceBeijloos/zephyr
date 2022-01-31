@@ -14,9 +14,5 @@ config SOC_PART_NUMBER_DA14699
 
 config GPIO_DA1469X
 	default y
-	
-# config UART_DA1469X
-# 	 default y
-# 	 select GPIO_DA1469X
 
 endif # SOC_SERIES_DA1469X
